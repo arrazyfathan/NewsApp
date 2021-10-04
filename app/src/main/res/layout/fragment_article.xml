@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.ArticleFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/articleSources"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:elevation="6dp"
+        app:cardBackgroundColor="#191616"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/tvSourceLetterArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/notosansdisplay_semibold"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="D" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvPublishedAtArticle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/notosansdisplay_regular"
+        android:textColor="#595959"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/articleSources"
+        app:layout_constraintStart_toEndOf="@+id/articleSources"
+        app:layout_constraintTop_toBottomOf="@+id/tvSourceArticle"
+        tools:text="1 Week Ago" />
+
+    <TextView
+        android:id="@+id/tvSourceArticle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/notosansdisplay_bold"
+        android:textColor="#131313"
+        app:layout_constraintStart_toEndOf="@+id/articleSources"
+        app:layout_constraintTop_toTopOf="@+id/articleSources"
+        tools:text="Lifehacker.com" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/loadingWebView"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:indeterminate="true"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"
+        app:indicatorColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/articleSources" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadingWebView" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/fab_icon"
+        android:src="@drawable/bookmark_filled"
+        app:backgroundTint="@color/white"
+        app:elevation="8dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
