@@ -1,8 +1,10 @@
 Simple News App  
 =================
+Simple news app android using MVVM
 
 Screenshots
 -----------
+[News App](screenshot/img.png "News App Screenshot")
 
 Libraries Used :
 --------------
