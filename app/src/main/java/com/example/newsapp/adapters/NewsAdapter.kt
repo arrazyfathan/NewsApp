@@ -1,10 +1,7 @@
 package com.example.newsapp.adapters
 
-import android.os.Build
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,14 +9,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.newsapp.R
+import com.example.newsapp.databinding.ItemArticlePreviewBinding
 import com.example.newsapp.models.Article
 import com.example.newsapp.util.Utils
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class ArticleViewHolder(val binding: ItemArticlePreviewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -35,37 +33,35 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_article_preview,
+            ItemArticlePreviewBinding.inflate(
+                LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
     }
 
-    override fun getItemCount(): Int {
-        return differ.currentList.size
-    }
+    override fun getItemCount() = differ.currentList.size
 
     private var onItemClickListener: ((Article) -> Unit)? = null
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
-
-
-        holder.itemView.apply {
-            Glide.with(this)
+        with(holder) {
+            Glide.with(holder.itemView.context)
                 .load(article.urlToImage)
                 .transform(CenterCrop(), RoundedCorners(8))
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(ivArticleImage)
-            tvSource.text = article.source?.name
-            tvSourceFirstLetter.text = article.source?.let { Utils.getFirstLetterSource(it.name).toString() }
-            tvTitle.text = article.title
-            tvDescription.text = article.description
-            tvPublishedAt.text = article.publishedAt?.let { Utils.dateTimeAgo(it) }
+                .into(binding.ivArticleImage)
 
-            setOnClickListener {
+            binding.tvSource.text = article.source?.name
+            binding.tvSourceFirstLetter.text =
+                article.source?.let { Utils.getFirstLetterSource(it.name).toString() }
+            binding.tvTitle.text = article.title
+            binding.tvDescription.text = article.description
+            binding.tvPublishedAt.text = article.publishedAt?.let { Utils.dateTimeAgo(it) }
+
+            binding.root.setOnClickListener {
                 onItemClickListener?.let { it(article) }
             }
         }
@@ -74,5 +70,4 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
-
 }
