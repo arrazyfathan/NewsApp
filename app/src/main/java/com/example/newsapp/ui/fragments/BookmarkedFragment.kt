@@ -3,40 +3,46 @@ package com.example.newsapp.ui.fragments
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.adapters.NewsAdapter
+import com.example.newsapp.databinding.FragmentBookmarkedBinding
 import com.example.newsapp.ui.NewsActivity
 import com.example.newsapp.ui.NewsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.android.synthetic.main.fragment_bookmarked.*
-import kotlinx.android.synthetic.main.fragment_search_news.*
 
-class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked) {
+class BookmarkedFragment : Fragment() {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
     lateinit var bottomNavigationBar: BottomNavigationView
     private val background = ColorDrawable()
     private val backgroundColor = Color.parseColor("#f44336")
+    private var _binding: FragmentBookmarkedBinding? = null
+    private val binding get() = _binding!!
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentBookmarkedBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        bottomNavigationBar = (activity as NewsActivity).bottomNavigationView
+        bottomNavigationBar = (activity as NewsActivity).findViewById(R.id.bottomNavigationView)
         bottomNavigationBar.visibility = View.VISIBLE
         setupRecyclerView()
 
@@ -73,7 +79,6 @@ class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked) {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-
                 val deleteIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_delete)!!
                 val intrinsicWidth = deleteIcon.intrinsicWidth + 30
                 val intrinsicHeight = deleteIcon.intrinsicHeight + 30
@@ -81,7 +86,7 @@ class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked) {
                 val itemView = viewHolder.itemView
                 val itemHeight = itemView.bottom - itemView.top
 
-                //draw red delete
+                // draw red delete
                 background.color = backgroundColor
                 background.setBounds(
                     itemView.right + dX.toInt(),
@@ -91,7 +96,7 @@ class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked) {
                 )
                 background.draw(c)
 
-                //calculate position of delete icon
+                // calculate position of delete icon
                 val iconTop = itemView.top + (itemHeight - intrinsicHeight) / 2
                 val iconMargin = (itemHeight - intrinsicHeight) / 2
                 val iconLeft = itemView.right - iconMargin - intrinsicWidth
@@ -109,7 +114,6 @@ class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked) {
                     actionState,
                     isCurrentlyActive
                 )
-
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -127,22 +131,19 @@ class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked) {
         }
 
         ItemTouchHelper(itemTouchHelperCallback).apply {
-            attachToRecyclerView(rvBookmarkedNews)
+            attachToRecyclerView(binding.rvBookmarkedNews)
         }
 
-        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { articles ->
+        viewModel.getSavedNews().observe(viewLifecycleOwner) { articles ->
             newsAdapter.differ.submitList(articles)
-
-        })
+        }
     }
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvBookmarkedNews.apply {
+        binding.rvBookmarkedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
-
-
 }

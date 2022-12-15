@@ -1,40 +1,49 @@
 package com.example.newsapp.ui.fragments
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.adapters.NewsAdapter
+import com.example.newsapp.databinding.FragmentBreakingNewsBinding
 import com.example.newsapp.ui.NewsActivity
 import com.example.newsapp.ui.NewsViewModel
 import com.example.newsapp.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.util.Resources
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
-class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment : Fragment() {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
     lateinit var bottomNavigationBar: BottomNavigationView
+    private var _binding: FragmentBreakingNewsBinding? = null
+    private val binding get() = _binding!!
 
     val TAG = "BreakingNewsFragment"
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentBreakingNewsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        bottomNavigationBar = (activity as NewsActivity).bottomNavigationView
+        bottomNavigationBar = (activity as NewsActivity).findViewById(R.id.bottomNavigationView)
         bottomNavigationBar.visibility = View.VISIBLE
         setupRecyclerView()
 
@@ -49,67 +58,75 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             )
         }
 
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resources.Success -> {
-                    hideProgressBar()
-                    hideNoInternet()
-                    response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles.toList())
-                        val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.breakingNewsPage == totalPages
-                        if (isLastPage) {
-                            rvBreakingNews.setPadding(0,0,0,0)
+        viewModel.breakingNews.observe(
+            viewLifecycleOwner,
+            Observer { response ->
+                when (response) {
+                    is Resources.Success -> {
+                        hideProgressBar()
+                        hideNoInternet()
+                        response.data?.let { newsResponse ->
+                            newsAdapter.differ.submitList(newsResponse.articles.toList())
+                            val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
+                            isLastPage = viewModel.breakingNewsPage == totalPages
+                            if (isLastPage) {
+                                binding.rvBreakingNews.setPadding(0, 0, 0, 0)
+                            }
                         }
                     }
-                }
-                is Resources.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e(TAG, "An error occured: $message")
-                        showNoInternet()
-                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
+                    is Resources.Error -> {
+                        hideProgressBar()
+                        response.message?.let { message ->
+                            Log.e(TAG, "An error occured: $message")
+                            showNoInternet()
+                            Toast.makeText(
+                                activity,
+                                "An error occured: $message",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        }
+                    }
+                    is Resources.Loading -> {
+                        showProgressBar()
                     }
                 }
-                is Resources.Loading -> {
-                    showProgressBar()
-                }
             }
-        })
+        )
 
-        btnRetry.setOnClickListener {
+        binding.btnRetry.setOnClickListener {
             viewModel.getBreakingNews("us")
             hideNoInternet()
         }
     }
 
     private fun hideProgressBar() {
-        loadingProgress.visibility = View.INVISIBLE
-        paginationProgressBar.visibility = View.INVISIBLE
+        binding.loadingProgress.visibility = View.INVISIBLE
+        binding.paginationProgressBar.visibility = View.INVISIBLE
     }
 
     private fun showProgressBar() {
-        loadingProgress.visibility = View.VISIBLE
-        paginationProgressBar.visibility = View.VISIBLE
+        binding.loadingProgress.visibility = View.VISIBLE
+        binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
     private fun showNoInternet() {
-        noInternet.visibility = View.VISIBLE
-        tvNoInternet.visibility = View.VISIBLE
-        btnRetry.visibility = View.VISIBLE
-        rvBreakingNews.visibility = View.INVISIBLE
+        binding.noInternet.visibility = View.VISIBLE
+        binding.tvNoInternet.visibility = View.VISIBLE
+        binding.btnRetry.visibility = View.VISIBLE
+        binding.rvBreakingNews.visibility = View.INVISIBLE
     }
 
     private fun hideNoInternet() {
-        noInternet.visibility = View.INVISIBLE
-        tvNoInternet.visibility = View.INVISIBLE
-        btnRetry.visibility = View.INVISIBLE
-        rvBreakingNews.visibility = View.VISIBLE
+        binding.noInternet.visibility = View.INVISIBLE
+        binding.tvNoInternet.visibility = View.INVISIBLE
+        binding.btnRetry.visibility = View.INVISIBLE
+        binding.rvBreakingNews.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvBreakingNews.apply {
+        binding.rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
@@ -148,16 +165,4 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             }
         }
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
