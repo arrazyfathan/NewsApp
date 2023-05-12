@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/loading_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:shimmer_auto_start="true"
+        app:shimmer_repeat_delay="100"
+        app:shimmer_repeat_mode="restart">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <View
+                android:id="@+id/ivArticleImage"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:background="@drawable/bg_shimmer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/test" />
+
+            <View
+                style="@style/Divider"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPublishedAt"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <View
+                android:id="@+id/tvSource"
+                android:layout_width="120dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_shimmer"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView"
+                tools:text="Lifehacker.com" />
+
+            <View
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_shimmer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivArticleImage"
+                app:layout_constraintTop_toTopOf="@+id/ivArticleImage" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle">
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_shimmer" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_shimmer" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_shimmer" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_shimmer" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/materialCardView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_shimmer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivArticleImage" />
+
+            <View
+                android:id="@+id/tvPublishedAt"
+                android:layout_width="80dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_shimmer"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/tvSource" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/error_loading_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/error_msg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/notosansdisplay_regular"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/btn_retry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="No Internet Connection" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_retry"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/notosansdisplay_regular"
+            android:layout_marginBottom="16dp"
+            android:text="Retry"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:cornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/error_msg" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

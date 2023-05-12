@@ -7,7 +7,6 @@
     tools:context=".topheadlines.TopHeadlinesFragment">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loadingProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -20,25 +19,35 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loader_2" />
 
-    <TextView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/tvAppBar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/playfairdisplay_extrabold"
-        android:text="Top News"
-        android:textColor="@color/black"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/playfairdisplay_extrabold"
+            android:text="Top News"
+            android:textColor="@color/black"
+            android:textSize="24sp"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/paginationProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,15 +57,30 @@
             android:id="@+id/rvBreakingNews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
             android:clipToPadding="false"
             android:paddingBottom="50dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
             tools:listitem="@layout/item_article_preview" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/loadingProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/paginationProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAppBar">
+
+        <include layout="@layout/item_loader"/>
+        <include layout="@layout/item_loader"/>
+        <include layout="@layout/item_loader"/>
+        <include layout="@layout/item_loader"/>
+    </LinearLayout>
 
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.arrazyfathan.common_utils.dateTimeAgo
+import com.arrazyfathan.common_utils.getFirstLetterSource
 import com.arrazyfathan.home_domain.model.Article
 import com.arrazyfathan.home_presentation.databinding.ItemArticlePreviewBinding
 import com.bumptech.glide.Glide
@@ -46,10 +48,10 @@ class NewsItemAdapter(
                     .into(binding.ivArticleImage)
 
                 tvSource.text = article.source.name
-                tvSourceFirstLetter.text = ""
+                tvSourceFirstLetter.text =  article.source.let { getFirstLetterSource(it.name).toString() }
                 tvTitle.text = article.title
                 tvDescription.text = article.description
-                tvPublishedAt.text = ""
+                tvPublishedAt.text = dateTimeAgo(article.publishedAt)
 
                 root.setOnClickListener {
                     onSelectedItem(article)

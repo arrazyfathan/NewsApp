@@ -51,6 +51,7 @@ dependencies {
     implementation(Deps.core)
     implementation(Deps.appCompat)
     implementation(Deps.material)
+    implementation(Deps.timeAgo)
     testImplementation(TestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.espresso)

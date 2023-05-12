@@ -24,6 +24,9 @@ object Version {
     const val activityKtx = "1.7.0"
     const val fragmentKtx = "1.5.6"
     const val paging = "3.1.1"
+    const val shimmer = "0.5.0"
+    const val swipeRefresh = "1.1.0"
+    const val recyclerView = "1.3.0"
 
     const val testImplJunit = "4.12"
     const val androidTestImplJunit = "1.1.1"
@@ -56,6 +59,9 @@ object Deps {
     val activityKtx by lazy { "androidx.activity:activity-ktx:${Version.activityKtx}" }
     val fragmentKtx by lazy { "androidx.fragment:fragment-ktx:${Version.fragmentKtx}" }
     val paging by lazy { "androidx.paging:paging-runtime:${Version.paging}" }
+    val shimmer by lazy { "com.facebook.shimmer:shimmer:${Version.shimmer}" }
+    val swipeRefresh by lazy { "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefresh}" }
+    val recyclerView by lazy { "androidx.recyclerview:recyclerview:${Version.swipeRefresh}" }
 }
 
 object DaggerHilt {

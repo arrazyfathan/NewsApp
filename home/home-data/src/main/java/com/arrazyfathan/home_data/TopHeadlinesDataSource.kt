@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.arrazyfathan.home_domain.model.Article
 import com.arrazyfathan.home_domain.repository.TopHeadlinesRepository
+import java.io.IOException
 import java.lang.Exception
 
 /**
@@ -29,6 +30,8 @@ class TopHeadlinesDataSource(
                 prevKey = null,
                 nextKey = if (response.isNotEmpty()) page + 1 else null,
             )
+        } catch (e: IOException) {
+            LoadResult.Error(NoInternetException())
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
@@ -38,3 +41,5 @@ class TopHeadlinesDataSource(
         const val DEFAULT_PAGE_SIZE = 10
     }
 }
+
+class NoInternetException(message: String = "No internet connection") : IOException(message)

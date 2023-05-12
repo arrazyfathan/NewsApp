@@ -82,5 +82,9 @@ dependencies {
 
     implementation(Deps.paging)
 
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation(Deps.swipeRefresh)
+
+    implementation(Deps.shimmer)
+
+    implementation(Deps.recyclerView)
 }

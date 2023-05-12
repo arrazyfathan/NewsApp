@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arrazyfathan.common_utils.extensions.toast
 import com.arrazyfathan.home_presentation.databinding.FragmentTopHeadlinesBinding
 import com.arrazyfathan.home_presentation.topheadlines.adapter.NewsItemAdapter
+import com.arrazyfathan.home_presentation.topheadlines.adapter.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -30,6 +31,7 @@ class TopHeadlinesFragment : Fragment() {
     private val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(requireContext())
     }
+
     private val topHeadlinesAdapter: NewsItemAdapter by lazy {
         NewsItemAdapter {
             toast(it.title)
@@ -55,16 +57,65 @@ class TopHeadlinesFragment : Fragment() {
     }
 
     private fun setupView() = with(binding) {
-        rvBreakingNews.adapter = topHeadlinesAdapter
-        rvBreakingNews.layoutManager = linearLayoutManager
+        with(topHeadlinesAdapter) {
+            rvBreakingNews.adapter = withLoadStateHeaderAndFooter(
+                header = PagingLoadStateAdapter(this),
+                footer = PagingLoadStateAdapter(this)
+            )
+            rvBreakingNews.layoutManager = linearLayoutManager
 
+            lifecycleScope.launch {
+                topHeadlinesAdapter.loadStateFlow.collect { loadState ->
+                    val isListEmpty =
+                        loadState.refresh is LoadState.NotLoading && topHeadlinesAdapter.itemCount == 0
+                    // show empty list
+
+                    // Only show the list if refresh succeeds, either from the the local db or the remote.
+                    binding.rvBreakingNews.isVisible =
+                        loadState.source.refresh is LoadState.NotLoading // || loadState.mediator?.refresh is LoadState.NotLoading
+
+                    // Show loading spinner during initial load or refresh.
+                    binding.loadingProgress.isVisible = loadState.refresh is LoadState.Loading
+                    binding.swipe.isRefreshing = false
+
+
+                    val errorState = loadState.source.append as? LoadState.Error
+                        ?: loadState.source.prepend as? LoadState.Error
+                        ?: loadState.append as? LoadState.Error
+                        ?: loadState.prepend as? LoadState.Error
+                    errorState?.let {
+                        toast("\uD83D\uDE28 Wooops, ${it.error.message}")
+                    }
+                    // Show the retry state if initial load or refresh fails.
+                    binding.btnRetry.isVisible =
+                        loadState.refresh is LoadState.Error && topHeadlinesAdapter.itemCount == 0
+                }
+            }
+        }
         rvBreakingNews.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
                 val firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
+                val lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition()
+                val itemCount = linearLayoutManager.itemCount
                 if (firstVisibleItemPosition != RecyclerView.NO_POSITION) {
                     viewModel.lastFirstVisiblePosition = firstVisibleItemPosition
                 }
+
+                if (lastVisibleItemPosition == itemCount - 1) {
+                    // last items
+                }
+
+                if (dy < 0) {
+                    // when scrolled up
+                }
+
+                if (binding.rvBreakingNews.canScrollVertically(-1)) {
+                    binding.tvAppBar.cardElevation = 20f
+                } else {
+                    binding.tvAppBar.cardElevation = 0f
+                }
+
+                super.onScrolled(recyclerView, dx, dy)
             }
         })
 
@@ -78,56 +129,9 @@ class TopHeadlinesFragment : Fragment() {
     }
 
     private fun observe() {
-        /*lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.topHeadlines.collect { state ->
-                    if (state.isLoading) {
-                        Log.d("Testing", state.isLoading.toString())
-                    }
-
-                    if (state.error.isNotBlank()) {
-                        toast(state.error)
-                        Log.d("Testing", state.error.toString())
-                    }
-
-                    state.data?.let {
-                        Log.d("Testing", it[0].title)
-                    }
-                }
-            }
-        }*/
-
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.topHeadlinesPager.collectLatest(topHeadlinesAdapter::submitData)
-            }
-        }
-
-        lifecycleScope.launch {
-            topHeadlinesAdapter.loadStateFlow.collect { loadState ->
-                val isListEmpty =
-                    loadState.refresh is LoadState.NotLoading && topHeadlinesAdapter.itemCount == 0
-                // show empty list
-
-                // Only show the list if refresh succeeds, either from the the local db or the remote.
-                binding.rvBreakingNews.isVisible =
-                    loadState.source.refresh is LoadState.NotLoading // || loadState.mediator?.refresh is LoadState.NotLoading
-
-                // Show loading spinner during initial load or refresh.
-                binding.loadingProgress.isVisible = loadState.refresh is LoadState.Loading
-                binding.swipe.isRefreshing = loadState.refresh is LoadState.Loading
-
-
-                // Show the retry state if initial load or refresh fails.
-                binding.btnRetry.isVisible = loadState.refresh is LoadState.Error && topHeadlinesAdapter.itemCount == 0
-
-                val errorState = loadState.source.append as? LoadState.Error
-                    ?: loadState.source.prepend as? LoadState.Error
-                    ?: loadState.append as? LoadState.Error
-                    ?: loadState.prepend as? LoadState.Error
-                errorState?.let {
-                    toast("\uD83D\uDE28 Wooops ${it.error}")
-                }
             }
         }
     }
@@ -139,3 +143,4 @@ class TopHeadlinesFragment : Fragment() {
         }
     }
 }
+
