@@ -2,9 +2,11 @@ package com.arrazyfathan.home_presentation.topheadlines
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,6 +17,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.arrazyfathan.common_utils.extensions.toast
 import com.arrazyfathan.home_presentation.databinding.FragmentTopHeadlinesBinding
 import com.arrazyfathan.home_presentation.topheadlines.adapter.NewsItemAdapter
@@ -102,11 +106,11 @@ class TopHeadlinesFragment : Fragment() {
                 }
 
                 if (lastVisibleItemPosition == itemCount - 1) {
-                    // last items
+                    revealButtonBackTopTop()
                 }
 
                 if (dy < 0) {
-                    // when scrolled up
+                    hideButtonToTop()
                 }
 
                 if (binding.rvBreakingNews.canScrollVertically(-1)) {
@@ -126,6 +130,10 @@ class TopHeadlinesFragment : Fragment() {
         swipe.setOnRefreshListener {
             topHeadlinesAdapter.refresh()
         }
+
+        btnBackToTop.setOnClickListener {
+            rvBreakingNews.smoothScrollToPosition(0)
+        }
     }
 
     private fun observe() {
@@ -134,6 +142,28 @@ class TopHeadlinesFragment : Fragment() {
                 viewModel.topHeadlinesPager.collectLatest(topHeadlinesAdapter::submitData)
             }
         }
+    }
+
+    private fun revealButtonBackTopTop() {
+        val transition = Slide(Gravity.BOTTOM)
+        transition.apply {
+            duration = 300
+            addTarget(binding.btnBackToTop)
+            interpolator = LinearInterpolator()
+        }
+        TransitionManager.beginDelayedTransition(binding.root, transition)
+        binding.btnBackToTop.isVisible = true
+    }
+
+    private fun hideButtonToTop() {
+        val transition = Slide(Gravity.BOTTOM)
+        transition.apply {
+            duration = 300
+            addTarget(binding.btnBackToTop)
+            interpolator = LinearInterpolator()
+        }
+        TransitionManager.beginDelayedTransition(binding.root, transition)
+        binding.btnBackToTop.visibility = View.INVISIBLE
     }
 
     override fun onResume() {

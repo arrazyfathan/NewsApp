@@ -23,9 +23,9 @@
         android:id="@+id/tvAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,7 +38,7 @@
             android:fontFamily="@font/playfairdisplay_extrabold"
             android:text="Top News"
             android:textColor="@color/black"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -76,10 +76,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAppBar">
 
-        <include layout="@layout/item_loader"/>
-        <include layout="@layout/item_loader"/>
-        <include layout="@layout/item_loader"/>
-        <include layout="@layout/item_loader"/>
+        <include layout="@layout/item_loader" />
+
+        <include layout="@layout/item_loader" />
+
+        <include layout="@layout/item_loader" />
+
+        <include layout="@layout/item_loader" />
     </LinearLayout>
 
 
@@ -143,5 +146,45 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvNoInternet" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btn_back_to_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_arrow_up" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/notosansdisplay_medium"
+                android:text="Back to top"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
