@@ -2,6 +2,7 @@ package com.example.newsapp.navigation
 
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
+import com.arrazyfathan.detail_presentation.navigation.GoToDetailActivity
 import com.arrazyfathan.home_presentation.navigation.GoToHomeActivity
 import com.arrazyfathan.search_presentation.GoToSearchActivity
 
@@ -15,6 +16,7 @@ class DefaultNavigator : Navigator.Provider {
         return when (screen) {
             Screen.HomeActivity -> GoToHomeActivity
             Screen.SearchActivity -> GoToSearchActivity
+            Screen.DetailScreen -> GoToDetailActivity
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.arrazyfathan.home_presentation.topheadlines
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -19,7 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
+import com.arrazyfathan.common_utils.extensions.toJson
 import com.arrazyfathan.common_utils.extensions.toast
+import com.arrazyfathan.common_utils.navigator.Navigator
+import com.arrazyfathan.common_utils.navigator.Screen
 import com.arrazyfathan.home_presentation.databinding.FragmentTopHeadlinesBinding
 import com.arrazyfathan.home_presentation.topheadlines.adapter.NewsItemAdapter
 import com.arrazyfathan.home_presentation.topheadlines.adapter.PagingLoadStateAdapter
@@ -27,9 +31,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TopHeadlinesFragment : Fragment() {
+
+    @Inject
+    lateinit var navigation: Navigator.Provider
 
     private val viewModel: TopHeadlinesViewModel by activityViewModels()
     private val linearLayoutManager: LinearLayoutManager by lazy {
@@ -37,8 +45,11 @@ class TopHeadlinesFragment : Fragment() {
     }
 
     private val topHeadlinesAdapter: NewsItemAdapter by lazy {
-        NewsItemAdapter {
-            toast(it.title)
+        NewsItemAdapter { article ->
+            val extras = Bundle().apply {
+                putString("article", article.toJson())
+            }
+            navigation.getScreen(Screen.DetailScreen).navigate(requireActivity(), extras)
         }
     }
 

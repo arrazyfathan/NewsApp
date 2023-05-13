@@ -6,4 +6,5 @@ package com.arrazyfathan.common_utils.navigator
 sealed class Screen {
     object HomeActivity : Screen()
     object SearchActivity : Screen()
+    object DetailScreen : Screen()
 }

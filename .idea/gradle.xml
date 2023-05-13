@@ -16,6 +16,10 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common/common-ui" />
             <option value="$PROJECT_DIR$/common/common-utils" />
+            <option value="$PROJECT_DIR$/detail" />
+            <option value="$PROJECT_DIR$/detail/detail-article-data" />
+            <option value="$PROJECT_DIR$/detail/detail-article-domain" />
+            <option value="$PROJECT_DIR$/detail/detail-presentation" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/home/home-data" />
             <option value="$PROJECT_DIR$/home/home-domain" />

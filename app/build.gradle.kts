@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":home:home-data"))
     implementation(project(":home:home-domain"))
     implementation(project(":search:search-presentation"))
+    implementation(project(":detail:detail-presentation"))
     implementation(project(":common:common-utils"))
 
     implementation(fileTree("src/main/libs") { include("*.jar") })
