@@ -6,6 +6,7 @@ import com.arrazyfathan.home_domain.model.Article
 import com.arrazyfathan.home_domain.repository.TopHeadlinesRepository
 import java.io.IOException
 import java.lang.Exception
+import java.net.UnknownHostException
 
 /**
  * Created by Ar Razy Fathan Rabbani on 11/05/23.

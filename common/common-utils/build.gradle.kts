@@ -66,4 +66,8 @@ dependencies {
     implementation(Deps.retrofitGsonConverter)
     implementation(Deps.loggingInterceptor)
     implementation(Deps.okHttp)
+
+    implementation(Deps.glide)
+    implementation(Deps.glideCompiler)
+    implementation(Deps.swipeRefresh)
 }

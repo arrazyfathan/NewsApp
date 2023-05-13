@@ -24,10 +24,12 @@ import com.arrazyfathan.common_utils.extensions.toJson
 import com.arrazyfathan.common_utils.extensions.toast
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
+import com.arrazyfathan.home_data.NoInternetException
 import com.arrazyfathan.home_presentation.databinding.FragmentTopHeadlinesBinding
 import com.arrazyfathan.home_presentation.topheadlines.adapter.NewsItemAdapter
 import com.arrazyfathan.home_presentation.topheadlines.adapter.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -93,6 +95,11 @@ class TopHeadlinesFragment : Fragment() {
                     binding.loadingProgress.isVisible = loadState.refresh is LoadState.Loading
                     binding.swipe.isRefreshing = false
 
+                    // Show the retry state if initial load or refresh fails.
+                    val error = loadState.refresh is LoadState.Error
+                    binding.btnRetry.isVisible = error
+                    binding.tvNoInternet.isVisible = error
+                    binding.noInternet.isVisible = error
 
                     val errorState = loadState.source.append as? LoadState.Error
                         ?: loadState.source.prepend as? LoadState.Error
@@ -100,10 +107,8 @@ class TopHeadlinesFragment : Fragment() {
                         ?: loadState.prepend as? LoadState.Error
                     errorState?.let {
                         toast("\uD83D\uDE28 Wooops, ${it.error.message}")
+                        binding.tvNoInternet.text = "\uD83D\uDE28 Wooops, ${it.error.message}"
                     }
-                    // Show the retry state if initial load or refresh fails.
-                    binding.btnRetry.isVisible =
-                        loadState.refresh is LoadState.Error && topHeadlinesAdapter.itemCount == 0
                 }
             }
         }
@@ -113,7 +118,10 @@ class TopHeadlinesFragment : Fragment() {
                 val lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition()
                 val itemCount = linearLayoutManager.itemCount
                 if (firstVisibleItemPosition != RecyclerView.NO_POSITION) {
-                    viewModel.lastFirstVisiblePosition = firstVisibleItemPosition
+                    lifecycleScope.launch {
+                        delay(500L)
+                        viewModel.lastFirstVisiblePosition = firstVisibleItemPosition
+                    }
                 }
 
                 if (lastVisibleItemPosition == itemCount - 1) {
@@ -129,7 +137,6 @@ class TopHeadlinesFragment : Fragment() {
                 } else {
                     binding.tvAppBar.cardElevation = 0f
                 }
-
                 super.onScrolled(recyclerView, dx, dy)
             }
         })

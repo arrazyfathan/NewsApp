@@ -15,6 +15,8 @@ interface NewsApiService {
         @Query("page") page: Int = 1,
         @Query("pageSize") pageSize: Int = 10,
         @Query("country") countryCode: String = Constants.COUNTRY,
+        // @Query("sortBy") sortBy: String = Constants.DeFAULT_SORT,
+        // @Query("q") keyword: String = Constants.DEFAULT_KEYWORD,
         @Query("apiKey") apiKey: String = Constants.API_KEY,
     ): NewsResponse
 }

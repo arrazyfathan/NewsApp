@@ -14,7 +14,6 @@ class TopHeadlinesRepositoryImpl @Inject constructor(
     private val newsApiService: NewsApiService,
 ) : TopHeadlinesRepository {
 
-
     override suspend fun getNewsArticles(page: Int, pageSize: Int): List<Article> {
         return newsApiService.getNewsArticles(page = page, pageSize = pageSize).articles.map {
             it.toDomainArticle()
