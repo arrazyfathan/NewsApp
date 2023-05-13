@@ -35,5 +35,12 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationBar.setupWithNavController(navController)
         binding.bottomNavigationBar.itemIconTintList = null
         binding.bottomNavigationBar.background = null
+
+        binding.bottomNavigationBar.setOnItemSelectedListener { item ->
+            val currentDestination = navController.currentDestination
+            if (item.itemId == currentDestination?.id) return@setOnItemSelectedListener false
+            navController.navigate(item.itemId)
+            return@setOnItemSelectedListener true
+        }
     }
 }

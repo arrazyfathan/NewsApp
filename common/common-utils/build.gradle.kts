@@ -48,6 +48,8 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":common:common-ui"))
     implementation(Deps.core)
     implementation(Deps.appCompat)
     implementation(Deps.material)

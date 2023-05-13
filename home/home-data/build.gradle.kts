@@ -58,4 +58,9 @@ dependencies {
     implementation(Deps.loggingInterceptor)
     implementation(Deps.okHttp)
     implementation(Deps.paging)
+
+    // Room
+    implementation(Deps.roomKtx)
+    implementation(Deps.roomRuntime)
+    kapt(Deps.rookCompiler)
 }

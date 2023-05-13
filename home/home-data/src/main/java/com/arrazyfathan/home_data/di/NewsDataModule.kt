@@ -1,7 +1,10 @@
 package com.arrazyfathan.home_data.di
 
+import com.arrazyfathan.home_data.repository.BookmarkRepositoryImpl
 import com.arrazyfathan.home_data.source.remote.network.NewsApiService
 import com.arrazyfathan.home_data.repository.TopHeadlinesRepositoryImpl
+import com.arrazyfathan.home_data.source.local.db.BookmarkDao
+import com.arrazyfathan.home_domain.repository.BookmarkRepository
 import com.arrazyfathan.home_domain.repository.TopHeadlinesRepository
 import dagger.Binds
 import dagger.Module
@@ -26,5 +29,10 @@ object NewsDataModule {
     @Provides
     fun provideTopHeadlineRepository(newsApiService: NewsApiService): TopHeadlinesRepository {
         return TopHeadlinesRepositoryImpl(newsApiService)
+    }
+
+    @Provides
+    fun provideBookmarkRepository(bookmarkDao: BookmarkDao): BookmarkRepository {
+        return BookmarkRepositoryImpl(bookmarkDao)
     }
 }

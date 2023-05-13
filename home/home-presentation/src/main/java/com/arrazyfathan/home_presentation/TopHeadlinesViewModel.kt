@@ -1,21 +1,25 @@
-package com.arrazyfathan.home_presentation.topheadlines
+package com.arrazyfathan.home_presentation
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.arrazyfathan.common_utils.Resources
-import com.arrazyfathan.home_data.TopHeadlinesDataSource
+import com.arrazyfathan.home_data.source.remote.TopHeadlinesDataSource
+import com.arrazyfathan.home_domain.model.Article
 import com.arrazyfathan.home_domain.repository.TopHeadlinesRepository
+import com.arrazyfathan.home_domain.usecase.GetBookmarkUseCase
 import com.arrazyfathan.home_domain.usecase.GetNewsArticleUseCase
+import com.arrazyfathan.home_presentation.topheadlines.TopHeadlinesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -25,7 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TopHeadlinesViewModel @Inject constructor(
     private val getNewsArticleUseCase: GetNewsArticleUseCase,
-    private val topHeadlinesRepository: TopHeadlinesRepository
+    private val topHeadlinesRepository: TopHeadlinesRepository,
+    private val bookmarkUseCase: GetBookmarkUseCase
 ) : ViewModel() {
 
     var lastFirstVisiblePosition = 0
@@ -38,6 +43,23 @@ class TopHeadlinesViewModel @Inject constructor(
     ) {
         TopHeadlinesDataSource(topHeadlinesRepository)
     }.flow.cachedIn(viewModelScope)
+
+    val bookmarkedArticles = bookmarkUseCase.getBookmarkedArticles().asLiveData()
+
+    fun checkArticleIsBookmarked(title: String) =
+        bookmarkUseCase.checkIfArticleIsBookmarked(title).asLiveData()
+
+    fun bookmarkArticle(article: Article) {
+        viewModelScope.launch {
+            bookmarkUseCase.bookmarkArticle(article)
+        }
+    }
+
+    fun removeBookmark(article: Article) {
+        viewModelScope.launch {
+            bookmarkUseCase.removeBookmark(article)
+        }
+    }
 
     private fun getNewsArticles() {
         getNewsArticleUseCase().onEach {

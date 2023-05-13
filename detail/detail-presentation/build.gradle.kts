@@ -53,6 +53,18 @@ dependencies {
     kapt(DaggerHilt.hiltCompiler)
     kapt(DaggerHilt.hiltAndroidCompiler)
 
+    // Coroutines
+    implementation(Deps.coroutinesCore)
+    implementation(Deps.coroutinesAndroid)
+
+    // Coroutine Lifecycle Scopes
+    implementation(Deps.viewModelKtx)
+    implementation(Deps.lifecycleRuntime)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+
+    implementation(Deps.activityKtx)
+    implementation(Deps.fragmentKtx)
+
     implementation(project(":common:common-utils"))
     implementation(project(":common:common-ui"))
     implementation(project(":detail:detail-article-domain"))

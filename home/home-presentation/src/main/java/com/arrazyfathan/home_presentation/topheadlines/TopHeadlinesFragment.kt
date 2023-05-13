@@ -1,8 +1,6 @@
 package com.arrazyfathan.home_presentation.topheadlines
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +9,6 @@ import android.view.animation.LinearInterpolator
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -24,13 +21,12 @@ import com.arrazyfathan.common_utils.extensions.toJson
 import com.arrazyfathan.common_utils.extensions.toast
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
-import com.arrazyfathan.home_data.NoInternetException
+import com.arrazyfathan.home_presentation.TopHeadlinesViewModel
 import com.arrazyfathan.home_presentation.databinding.FragmentTopHeadlinesBinding
 import com.arrazyfathan.home_presentation.topheadlines.adapter.NewsItemAdapter
 import com.arrazyfathan.home_presentation.topheadlines.adapter.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject

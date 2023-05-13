@@ -9,16 +9,26 @@ import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.arrazyfathan.common_utils.Constants.TAG
 import com.arrazyfathan.common_utils.dateTimeAgo
 import com.arrazyfathan.common_utils.extensions.fromJson
+import com.arrazyfathan.common_utils.extensions.showCustomToast
+import com.arrazyfathan.common_utils.extensions.singleShotObserve
 import com.arrazyfathan.common_utils.getFirstLetterSource
 import com.arrazyfathan.detail_presentation.databinding.ActivityDetailArticleBinding
 import com.arrazyfathan.home_domain.model.Article
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
+
+@AndroidEntryPoint
 class DetailArticleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailArticleBinding
+    private val viewModel: DetailArticleViewModel by viewModels()
 
     private val article: Article? by lazy {
         intent.getStringExtra("article")?.fromJson()
@@ -29,16 +39,26 @@ class DetailArticleActivity : AppCompatActivity() {
         binding = ActivityDetailArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupView()
+        observe()
+    }
+
+    private fun observe() {
+        article?.let {
+            viewModel.checkArticleIsBookmarked(it.title).observe(this) { state ->
+                binding.fab.isVisible = !state
+            }
+        }
     }
 
     private fun setupView() = with(binding) {
-        article?.let {
-            tvSourceArticle.text = it.source.name
-            tvPublishedAtArticle.text = dateTimeAgo(it.publishedAt)
-            tvSourceLetterArticle.text = getFirstLetterSource(it.source.name).toString()
+        binding.loadingWebView.visibility = View.VISIBLE
+        article?.let { article ->
+            tvSourceArticle.text = article.source.name
+            tvPublishedAtArticle.text = dateTimeAgo(article.publishedAt)
+            tvSourceLetterArticle.text = getFirstLetterSource(article.source.name).toString()
             webView.apply {
                 webViewClient = WebViewClient()
-                loadUrl(it.url)
+                loadUrl(article.url)
                 settings.userAgentString = "Android"
             }
 
@@ -52,6 +72,11 @@ class DetailArticleActivity : AppCompatActivity() {
             }
 
             setupProgressBar()
+
+            fab.setOnClickListener {
+                viewModel.bookmarkArticle(article)
+                showCustomToast("Article Bookmarked", this@DetailArticleActivity)
+            }
         }
     }
 

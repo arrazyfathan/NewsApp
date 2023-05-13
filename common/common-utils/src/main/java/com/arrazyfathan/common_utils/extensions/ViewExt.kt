@@ -1,10 +1,13 @@
 package com.arrazyfathan.common_utils.extensions
 
 import android.app.Activity
+import android.view.Gravity
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.arrazyfathan.common_utils.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -33,4 +36,19 @@ fun ImageView.loadImage(url: String) {
         .transform(CenterCrop(), RoundedCorners(16))
         .transition(DrawableTransitionOptions.withCrossFade())
         .error(com.google.android.material.R.drawable.mtrl_ic_error).into(this)
+}
+
+fun showCustomToast(message: String, activity: Activity) {
+    val inflater = activity.layoutInflater
+    val layout = inflater.inflate(R.layout.custom_toast_layout, null)
+
+    val textView = layout.findViewById<TextView>(R.id.toast_text)
+    textView.text = message
+
+    Toast(activity).apply {
+        setGravity(Gravity.TOP, 0, 20)
+        duration = Toast.LENGTH_SHORT
+        view = layout
+        show()
+    }
 }
