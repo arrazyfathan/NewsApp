@@ -35,6 +35,9 @@ class TopHeadlinesViewModel @Inject constructor(
 
     var lastFirstVisiblePosition = 0
 
+    private val _isGridLayoutManager = MutableStateFlow(true)
+    val isGridLayoutManager: StateFlow<Boolean> = _isGridLayoutManager
+
     private val _topHeadlines = MutableStateFlow(TopHeadlinesState())
     val topHeadlines: StateFlow<TopHeadlinesState> = _topHeadlines
 
@@ -58,6 +61,12 @@ class TopHeadlinesViewModel @Inject constructor(
     fun removeBookmark(article: Article) {
         viewModelScope.launch {
             bookmarkUseCase.removeBookmark(article)
+        }
+    }
+
+    fun setLayoutManager(isGrid: Boolean) {
+        viewModelScope.launch {
+            _isGridLayoutManager.value = isGrid
         }
     }
 

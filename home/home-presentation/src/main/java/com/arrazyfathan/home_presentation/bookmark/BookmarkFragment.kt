@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arrazyfathan.common_utils.Constants.TAG
@@ -33,20 +34,15 @@ class BookmarkFragment : Fragment() {
 
     private val viewModel: TopHeadlinesViewModel by activityViewModels()
 
-    private var _binding: FragmentBookmarkBinding? = null
-
     @Inject
     lateinit var navigation: Navigator.Provider
-    private val binding get() = _binding!!
 
-    private val bookmarkAdapter: BookmarkAdapter by lazy {
-        BookmarkAdapter(requireContext()) { article ->
-            val extras = Bundle().apply {
-                putString("article", article.toJson())
-            }
-            navigation.getScreen(Screen.DetailScreen).navigate(requireActivity(), extras)
-        }
-    }
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var gridLayoutManager: LinearLayoutManager
+    private lateinit var bookmarkAdapter: BookmarkAdapter
+
+    private var _binding: FragmentBookmarkBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +60,14 @@ class BookmarkFragment : Fragment() {
     }
 
     private fun setupView() = with(binding) {
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        rvItemBookmark.layoutManager = layoutManager
+        bookmarkAdapter = BookmarkAdapter(layoutManager) { article ->
+            val extras = Bundle().apply {
+                putString("article", article.toJson())
+            }
+            navigation.getScreen(Screen.DetailScreen).navigate(requireActivity(), extras)
+        }
         rvItemBookmark.adapter = bookmarkAdapter
         rvItemBookmark.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -75,6 +79,15 @@ class BookmarkFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
+
+        tvAppBar.setOnClickListener {
+            if (layoutManager.spanCount == 1) {
+                layoutManager.spanCount = 2
+            } else {
+                layoutManager.spanCount = 1
+            }
+            bookmarkAdapter.notifyItemRangeChanged(0, bookmarkAdapter?.itemCount ?: 0)
+        }
     }
 
     private fun observe() {

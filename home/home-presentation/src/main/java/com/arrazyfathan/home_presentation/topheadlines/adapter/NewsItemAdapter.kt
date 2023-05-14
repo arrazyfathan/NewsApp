@@ -10,10 +10,6 @@ import com.arrazyfathan.common_utils.extensions.loadImage
 import com.arrazyfathan.common_utils.getFirstLetterSource
 import com.arrazyfathan.home_domain.model.Article
 import com.arrazyfathan.home_presentation.databinding.ItemArticlePreviewBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 /**
  * Created by Ar Razy Fathan Rabbani on 11/05/23.
@@ -38,7 +34,7 @@ class NewsItemAdapter(
         }
     }
 
-    inner class ViewHolder(val binding: ItemArticlePreviewBinding) :
+    inner class ViewHolder(private val binding: ItemArticlePreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article) {
             with(binding) {
