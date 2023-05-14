@@ -25,7 +25,7 @@
     <FrameLayout
         android:id="@+id/container_nav_menu"
         android:layout_width="270dp"
-        android:layout_height="70dp"
+        android:layout_height="76dp"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="20dp"
         android:background="@drawable/radius_100"

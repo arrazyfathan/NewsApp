@@ -38,9 +38,7 @@ class TopHeadlinesFragment : Fragment() {
     lateinit var navigation: Navigator.Provider
 
     private val viewModel: TopHeadlinesViewModel by activityViewModels()
-    private val linearLayoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(requireContext())
-    }
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private val topHeadlinesAdapter: NewsItemAdapter by lazy {
         NewsItemAdapter { article ->
@@ -70,13 +68,13 @@ class TopHeadlinesFragment : Fragment() {
     }
 
     private fun setupView() = with(binding) {
+        linearLayoutManager = LinearLayoutManager(requireContext())
+        rvBreakingNews.layoutManager = linearLayoutManager
         with(topHeadlinesAdapter) {
             rvBreakingNews.adapter = withLoadStateHeaderAndFooter(
                 header = PagingLoadStateAdapter(this),
                 footer = PagingLoadStateAdapter(this)
             )
-            rvBreakingNews.layoutManager = linearLayoutManager
-
             lifecycleScope.launch {
                 topHeadlinesAdapter.loadStateFlow.collect { loadState ->
                     val isListEmpty =
@@ -152,9 +150,7 @@ class TopHeadlinesFragment : Fragment() {
 
     private fun observe() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.topHeadlinesPager.collectLatest(topHeadlinesAdapter::submitData)
-            }
+            viewModel.topHeadlinesPager.collectLatest(topHeadlinesAdapter::submitData)
         }
     }
 
