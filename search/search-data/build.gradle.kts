@@ -37,6 +37,10 @@ android {
 
 dependencies {
 
+    implementation(project(":home:home-data"))
+    implementation(project(":home:home-domain"))
+    implementation(project(":search:search-domain"))
+
     implementation(Deps.core)
     implementation(Deps.appCompat)
     implementation(Deps.material)
@@ -48,4 +52,11 @@ dependencies {
     implementation(DaggerHilt.hilt)
     kapt(DaggerHilt.hiltCompiler)
     kapt(DaggerHilt.hiltAndroidCompiler)
+
+    // Retrofil
+    implementation(Deps.retrofit)
+    implementation(Deps.retrofitGsonConverter)
+    implementation(Deps.loggingInterceptor)
+    implementation(Deps.okHttp)
+    implementation(Deps.paging)
 }
