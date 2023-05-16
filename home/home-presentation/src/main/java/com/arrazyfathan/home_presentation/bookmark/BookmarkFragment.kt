@@ -1,33 +1,24 @@
 package com.arrazyfathan.home_presentation.bookmark
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arrazyfathan.common_ui.recyclerview.AdaptiveSpacingItemDecoration
-import com.arrazyfathan.common_utils.Constants.TAG
-import com.arrazyfathan.common_utils.extensions.observeOnce
+import com.arrazyfathan.common_utils.extensions.dp
 import com.arrazyfathan.common_utils.extensions.singleShotObserve
-import com.arrazyfathan.common_utils.extensions.toDp
 import com.arrazyfathan.common_utils.extensions.toJson
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
+import com.arrazyfathan.home_presentation.R
 import com.arrazyfathan.home_presentation.databinding.FragmentBookmarkBinding
 import com.arrazyfathan.home_presentation.TopHeadlinesViewModel
 import com.arrazyfathan.home_presentation.bookmark.adapter.BookmarkAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -39,8 +30,6 @@ class BookmarkFragment : Fragment() {
     @Inject
     lateinit var navigation: Navigator.Provider
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var gridLayoutManager: LinearLayoutManager
     private lateinit var bookmarkAdapter: BookmarkAdapter
 
     private var _binding: FragmentBookmarkBinding? = null
@@ -82,16 +71,16 @@ class BookmarkFragment : Fragment() {
             }
         })
 
-        val marginGrid = 16.toDp(requireContext())
-        rvItemBookmark.addItemDecoration(AdaptiveSpacingItemDecoration(marginGrid, true))
+        rvItemBookmark.addItemDecoration(AdaptiveSpacingItemDecoration(16.dp(), true))
 
-        tvAppBar.setOnClickListener {
-            if (layoutManager.spanCount == 1) {
-                layoutManager.spanCount = 2
-            } else {
-                layoutManager.spanCount = 1
+        btnToggleLayout.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btn_layout_grid -> if (layoutManager.spanCount == 1) layoutManager.spanCount = 2
+                    R.id.btn_layout_list -> if (layoutManager.spanCount == 2) layoutManager.spanCount = 1
+                }
             }
-            bookmarkAdapter.notifyItemRangeChanged(0, bookmarkAdapter?.itemCount ?: 0)
+            bookmarkAdapter.notifyItemRangeChanged(0, bookmarkAdapter.itemCount)
         }
     }
 

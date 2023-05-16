@@ -11,23 +11,67 @@
         android:id="@+id/tvAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="0dp"
         app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/playfairdisplay_extrabold"
-            android:text="Bookmarked"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/playfairdisplay_extrabold"
+                android:includeFontPadding="false"
+                android:text="Bookmarked"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/btn_toggle_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/toolbar_title"
+                app:checkedButton="@+id/btn_layout_grid"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/btn_layout_grid"
+                    style="@style/ToggleButtonWithIconOnly"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:icon="@drawable/ic_layout_grid" />
+
+                <Button
+                    android:id="@+id/btn_layout_list"
+                    style="@style/ToggleButtonWithIconOnly"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:icon="@drawable/ic_layout_list" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -35,13 +79,13 @@
         android:id="@+id/rv_item_bookmark"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:itemCount="12"
-        app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_bookmark_grid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppBar" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAppBar"
+        app:spanCount="2"
+        tools:itemCount="12"
+        tools:listitem="@layout/item_bookmark_grid" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
