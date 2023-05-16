@@ -13,9 +13,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arrazyfathan.common_ui.recyclerview.AdaptiveSpacingItemDecoration
 import com.arrazyfathan.common_utils.Constants.TAG
 import com.arrazyfathan.common_utils.extensions.observeOnce
 import com.arrazyfathan.common_utils.extensions.singleShotObserve
+import com.arrazyfathan.common_utils.extensions.toDp
 import com.arrazyfathan.common_utils.extensions.toJson
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
@@ -79,6 +81,9 @@ class BookmarkFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
+
+        val marginGrid = 16.toDp(requireContext())
+        rvItemBookmark.addItemDecoration(AdaptiveSpacingItemDecoration(marginGrid, true))
 
         tvAppBar.setOnClickListener {
             if (layoutManager.spanCount == 1) {
