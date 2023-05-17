@@ -15,12 +15,12 @@ import com.arrazyfathan.home_domain.usecase.GetBookmarkUseCase
 import com.arrazyfathan.home_domain.usecase.GetNewsArticleUseCase
 import com.arrazyfathan.home_presentation.topheadlines.TopHeadlinesState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Created by Ar Razy Fathan Rabbani on 10/05/23.
@@ -41,11 +41,11 @@ class TopHeadlinesViewModel @Inject constructor(
     private val _topHeadlines = MutableStateFlow(TopHeadlinesState())
     val topHeadlines: StateFlow<TopHeadlinesState> = _topHeadlines
 
-    /*val topHeadlinesPager = Pager(
-        config = PagingConfig(pageSize = 10),
+    val topHeadlinesPager = Pager(
+        config = PagingConfig(pageSize = 10)
     ) {
         TopHeadlinesDataSource(topHeadlinesRepository)
-    }.flow.cachedIn(viewModelScope)*/
+    }.flow.cachedIn(viewModelScope)
 
     val bookmarkedArticles = bookmarkUseCase.getBookmarkedArticles().asLiveData()
 

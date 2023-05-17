@@ -8,5 +8,5 @@ import com.arrazyfathan.home_domain.model.Article
 data class TopHeadlinesState(
     val isLoading: Boolean = false,
     val error: String = "",
-    val data: List<Article>? = null,
+    val data: List<Article>? = null
 )

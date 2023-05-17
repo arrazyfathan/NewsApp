@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
+import com.arrazyfathan.common_utils.enableDoubleTapToExit
 import com.arrazyfathan.common_utils.extensions.toJson
 import com.arrazyfathan.common_utils.extensions.toast
 import com.arrazyfathan.common_utils.navigator.Navigator
@@ -26,10 +26,10 @@ import com.arrazyfathan.home_presentation.databinding.FragmentTopHeadlinesBindin
 import com.arrazyfathan.home_presentation.topheadlines.adapter.NewsItemAdapter
 import com.arrazyfathan.home_presentation.topheadlines.adapter.PagingLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TopHeadlinesFragment : Fragment() {
@@ -55,7 +55,7 @@ class TopHeadlinesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTopHeadlinesBinding.inflate(inflater, container, false)
         return binding.root
@@ -78,7 +78,7 @@ class TopHeadlinesFragment : Fragment() {
             lifecycleScope.launch {
                 topHeadlinesAdapter.loadStateFlow.collect { loadState ->
                     val isListEmpty =
-                        loadState.refresh is LoadState.NotLoading && topHeadlinesAdapter.itemCount == 0
+                        loadState.refresh is LoadState.NotLoading && topHeadlinesAdapter.itemCount == 0 // ktlint-disable max-line-length
                     // show empty list
 
                     // Only show the list if refresh succeeds, either from the the local db or the remote.
@@ -154,12 +154,14 @@ class TopHeadlinesFragment : Fragment() {
         btnSearch.setOnClickListener {
             navigation.getScreen(Screen.SearchActivity).navigate(requireActivity())
         }
+
+        enableDoubleTapToExit(requireActivity() as AppCompatActivity)
     }
 
     private fun observe() {
-        /*lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.topHeadlinesPager.collectLatest(topHeadlinesAdapter::submitData)
-        }*/
+        }
     }
 
     private fun revealButtonBackTopTop() {
@@ -190,5 +192,9 @@ class TopHeadlinesFragment : Fragment() {
             binding.rvBreakingNews.scrollToPosition(viewModel.lastFirstVisiblePosition)
         }
     }
-}
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
