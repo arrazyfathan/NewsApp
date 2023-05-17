@@ -4,7 +4,19 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "News App"
 include ':app'
+include ':home:home-data'
+include ':home:home-domain'
+include ':home:home-presentation'
+include ':common:common-utils'
+include ':search:search-data'
+include ':search:search-domain'
+include ':search:search-presentation'
+include ':common:common-ui'
+include ':detail:detail-article-data'
+include ':detail:detail-article-domain'
+include ':detail:detail-presentation'

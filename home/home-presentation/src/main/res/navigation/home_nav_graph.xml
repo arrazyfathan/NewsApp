@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph.xml"
+    app:startDestination="@id/topHeadlinesFragment">
+
+    <fragment
+        android:id="@+id/topHeadlinesFragment"
+        android:name="com.arrazyfathan.home_presentation.topheadlines.TopHeadlinesFragment"
+        android:label="fragment_top_headlines"
+        tools:layout="@layout/fragment_top_headlines" >
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.arrazyfathan.home_presentation.bookmark.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark" >
+    </fragment>
+</navigation>
