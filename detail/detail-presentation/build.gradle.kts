@@ -65,6 +65,8 @@ dependencies {
     implementation(Deps.activityKtx)
     implementation(Deps.fragmentKtx)
 
+    implementation(Deps.lottie)
+
     implementation(project(":common:common-utils"))
     implementation(project(":common:common-ui"))
     implementation(project(":detail:detail-article-domain"))

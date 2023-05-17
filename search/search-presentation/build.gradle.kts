@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -31,11 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
     implementation(project(":common:common-utils"))
+    implementation(project(":common:common-ui"))
+    implementation(project(":search:search-data"))
+    implementation(project(":search:search-domain"))
+
     implementation(Deps.core)
     implementation(Deps.appCompat)
     implementation(Deps.material)
@@ -43,4 +52,32 @@ dependencies {
     testImplementation(TestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.espresso)
+
+
+    // Hilt
+    implementation(DaggerHilt.hilt)
+    kapt(DaggerHilt.hiltCompiler)
+    kapt(DaggerHilt.hiltAndroidCompiler)
+
+    // Coroutines
+    implementation(Deps.coroutinesCore)
+    implementation(Deps.coroutinesAndroid)
+
+    // Coroutine Lifecycle Scopes
+    implementation(Deps.viewModelKtx)
+    implementation(Deps.lifecycleRuntime)
+
+    // Glide
+    implementation(Deps.glide)
+    kapt(Deps.glideCompiler)
+
+    implementation(Deps.activityKtx)
+    implementation(Deps.fragmentKtx)
+
+    // Lottie
+    implementation(Deps.lottie)
+    implementation(Deps.swipeRefresh)
+    implementation(Deps.shimmer)
+
+    implementation("io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0")
 }

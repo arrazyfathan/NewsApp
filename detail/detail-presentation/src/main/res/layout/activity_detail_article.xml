@@ -100,7 +100,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,6 +112,32 @@
         app:elevation="8dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btn_bookmark"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/anime_bookmark"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:layout_margin="3dp"
+            app:lottie_autoPlay="false"
+            app:lottie_rawRes="@raw/bookmark"/>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

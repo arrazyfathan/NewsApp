@@ -37,8 +37,6 @@ android {
 
 dependencies {
 
-    implementation(project(":home:home-data"))
-    implementation(project(":home:home-domain"))
     implementation(project(":search:search-domain"))
 
     implementation(Deps.core)

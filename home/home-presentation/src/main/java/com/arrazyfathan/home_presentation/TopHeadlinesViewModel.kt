@@ -41,11 +41,11 @@ class TopHeadlinesViewModel @Inject constructor(
     private val _topHeadlines = MutableStateFlow(TopHeadlinesState())
     val topHeadlines: StateFlow<TopHeadlinesState> = _topHeadlines
 
-    val topHeadlinesPager = Pager(
+    /*val topHeadlinesPager = Pager(
         config = PagingConfig(pageSize = 10),
     ) {
         TopHeadlinesDataSource(topHeadlinesRepository)
-    }.flow.cachedIn(viewModelScope)
+    }.flow.cachedIn(viewModelScope)*/
 
     val bookmarkedArticles = bookmarkUseCase.getBookmarkedArticles().asLiveData()
 

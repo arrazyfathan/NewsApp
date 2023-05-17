@@ -6,22 +6,31 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.animation.AnticipateInterpolator
+import android.view.animation.LinearInterpolator
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.arrazyfathan.common_utils.Constants.TAG
 import com.arrazyfathan.common_utils.dateTimeAgo
 import com.arrazyfathan.common_utils.extensions.fromJson
+import com.arrazyfathan.common_utils.extensions.setOnOneTimeClickListener
 import com.arrazyfathan.common_utils.extensions.showCustomToast
 import com.arrazyfathan.common_utils.extensions.singleShotObserve
 import com.arrazyfathan.common_utils.getFirstLetterSource
 import com.arrazyfathan.detail_presentation.databinding.ActivityDetailArticleBinding
 import com.arrazyfathan.home_domain.model.Article
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -45,7 +54,13 @@ class DetailArticleActivity : AppCompatActivity() {
     private fun observe() {
         article?.let {
             viewModel.checkArticleIsBookmarked(it.title).observe(this) { state ->
-                binding.fab.isVisible = !state
+                if (it.isBookmarked) binding.btnBookmark.isVisible = false
+                if (state) {
+                    lifecycleScope.launch {
+                        delay(600L)
+                        hideButtonBookmark()
+                    }
+                }
             }
         }
     }
@@ -73,11 +88,30 @@ class DetailArticleActivity : AppCompatActivity() {
 
             setupProgressBar()
 
-            fab.setOnClickListener {
-                viewModel.bookmarkArticle(article)
-                showCustomToast("Article Bookmarked", this@DetailArticleActivity)
+            btnBookmark.setOnOneTimeClickListener {
+                animeBookmark.apply {
+                    setMaxFrame(50)
+                    playAnimation()
+                    bookmarkArticle(article)
+                    showCustomToast("Article Bookmarked", this@DetailArticleActivity)
+                }
             }
         }
+    }
+
+    private fun bookmarkArticle(article: Article) {
+        viewModel.bookmarkArticle(article)
+    }
+
+    private fun hideButtonBookmark() {
+        val transition = Slide(Gravity.BOTTOM)
+        transition.apply {
+            duration = 500
+            addTarget(binding.btnBookmark)
+            interpolator = AnticipateInterpolator()
+        }
+        TransitionManager.beginDelayedTransition(binding.root, transition)
+        binding.btnBookmark.visibility = View.INVISIBLE
     }
 
     private fun setupProgressBar() {

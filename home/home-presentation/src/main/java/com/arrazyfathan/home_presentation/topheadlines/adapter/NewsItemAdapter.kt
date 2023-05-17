@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arrazyfathan.common_utils.dateTimeAgo
 import com.arrazyfathan.common_utils.extensions.loadImage
+import com.arrazyfathan.common_utils.formatHtmlText
 import com.arrazyfathan.common_utils.getFirstLetterSource
 import com.arrazyfathan.home_domain.model.Article
 import com.arrazyfathan.home_presentation.databinding.ItemArticlePreviewBinding
@@ -42,7 +43,7 @@ class NewsItemAdapter(
                 tvSource.text = article.source.name
                 tvSourceFirstLetter.text =  article.source.let { getFirstLetterSource(it.name).toString() }
                 tvTitle.text = article.title
-                tvDescription.text = article.description
+                tvDescription.text = formatHtmlText(article.description)
                 tvPublishedAt.text = dateTimeAgo(article.publishedAt)
 
                 root.setOnClickListener {

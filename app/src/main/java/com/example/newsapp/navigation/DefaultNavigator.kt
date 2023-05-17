@@ -4,7 +4,7 @@ import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
 import com.arrazyfathan.detail_presentation.navigation.GoToDetailActivity
 import com.arrazyfathan.home_presentation.navigation.GoToHomeActivity
-import com.arrazyfathan.search_presentation.GoToSearchActivity
+import com.arrazyfathan.search_presentation.navigation.GoToSearchActivity
 
 /**
  * Created by Ar Razy Fathan Rabbani on 10/05/23.

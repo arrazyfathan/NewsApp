@@ -9,4 +9,7 @@ object Constants {
     const val COUNTRY = "us"
     const val DEFAULT_KEYWORD = "tech"
     const val TAG = "debugMode"
+    const val START_DATE = "from"
+    const val END_DATE = "to"
+    const val QUERY = "q"
 }

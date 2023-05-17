@@ -38,7 +38,6 @@ android {
 dependencies {
 
     implementation(project(":common:common-utils"))
-    implementation(project(":home:home-domain"))
 
     implementation(Deps.core)
     implementation(Deps.appCompat)

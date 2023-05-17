@@ -146,12 +146,16 @@ class TopHeadlinesFragment : Fragment() {
         btnBackToTop.setOnClickListener {
             rvBreakingNews.smoothScrollToPosition(0)
         }
+
+        tvAppBar.setOnClickListener {
+            navigation.getScreen(Screen.SearchActivity).navigate(requireActivity())
+        }
     }
 
     private fun observe() {
-        lifecycleScope.launch {
+        /*lifecycleScope.launch {
             viewModel.topHeadlinesPager.collectLatest(topHeadlinesAdapter::submitData)
-        }
+        }*/
     }
 
     private fun revealButtonBackTopTop() {

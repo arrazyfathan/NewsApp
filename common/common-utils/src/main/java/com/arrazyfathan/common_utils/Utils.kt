@@ -1,5 +1,7 @@
 package com.arrazyfathan.common_utils
 
+import android.text.Spanned
+import androidx.core.text.HtmlCompat
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import java.time.Instant
 
@@ -15,4 +17,8 @@ fun dateTimeAgo(date: String): String {
 
 fun getFirstLetterSource(source: String): Char {
     return source[0].uppercaseChar()
+}
+
+fun formatHtmlText(htmlString: String): Spanned {
+    return HtmlCompat.fromHtml(htmlString, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
