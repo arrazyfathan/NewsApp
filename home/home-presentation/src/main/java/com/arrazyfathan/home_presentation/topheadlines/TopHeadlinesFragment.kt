@@ -150,6 +150,10 @@ class TopHeadlinesFragment : Fragment() {
         tvAppBar.setOnClickListener {
             navigation.getScreen(Screen.SearchActivity).navigate(requireActivity())
         }
+
+        btnSearch.setOnClickListener {
+            navigation.getScreen(Screen.SearchActivity).navigate(requireActivity())
+        }
     }
 
     private fun observe() {
