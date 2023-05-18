@@ -7,6 +7,7 @@ Screenshots
 -----------  
 ![News App](screenshot/img.png "News App Screenshot")
 
+
 Technologies Used: :
 --------------  
 * **Clean Architecture**: The project implements the principles of clean architecture to separate the business, presentation, and data layers. This enables easier testing and flexibility in swapping out layer implementations.
@@ -38,6 +39,16 @@ Add api key into your `local.properties` file:
 ```gradle  
 API_KEY=YOUR_API_KEYS  
 ```  
+
+Demo
+-----------
+
+https://github.com/arrazyfathan/NewsApp/assets/18359255/0da726ae-bc1d-46ec-9b9c-1f467dc86734
+
+https://github.com/arrazyfathan/NewsApp/assets/18359255/084fee83-5267-4ceb-b8b2-ae4f111f9cb8
+
+https://github.com/arrazyfathan/NewsApp/assets/18359255/3529ff02-02b9-43ce-bbae-86954da93e9a
+
 
 # License
 ```xml
