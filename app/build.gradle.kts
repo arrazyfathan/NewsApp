@@ -57,9 +57,9 @@ dependencies {
     implementation(Deps.core)
     implementation(Deps.constrainLayout)
     implementation(Deps.androidLegacySupport)
-    testImplementation(TestImplementation.jUnit)
+    /*testImplementation(TestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)
+    androidTestImplementation(AndroidTestImplementation.espresso)*/
     implementation(Deps.material)
 
     // Coroutines

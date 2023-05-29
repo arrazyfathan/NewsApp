@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace = "com.arrazyfathan.search_domain"
-    compileSdk = 33
+    compileSdk = DefaultConfig.compileSdk
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = DefaultConfig.minSdk
+        targetSdk = DefaultConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -42,9 +42,9 @@ dependencies {
     implementation(Deps.core)
     implementation(Deps.appCompat)
     implementation(Deps.material)
-    testImplementation(TestImplementation.jUnit)
+    /*testImplementation(TestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)
+    androidTestImplementation(AndroidTestImplementation.espresso)*/
 
     // Hilt
     implementation(DaggerHilt.hilt)

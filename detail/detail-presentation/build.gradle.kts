@@ -44,9 +44,9 @@ dependencies {
     implementation(Deps.appCompat)
     implementation(Deps.material)
     implementation(Deps.constrainLayout)
-    testImplementation(TestImplementation.jUnit)
+    /*testImplementation(TestImplementation.jUnit)
     androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)
+    androidTestImplementation(AndroidTestImplementation.espresso)*/
 
     // Hilt
     implementation(DaggerHilt.hilt)
