@@ -1,3 +1,6 @@
+import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.project
+
 /**
  * Created by Ar Razy Fathan Rabbani on 10/05/23.
  */
@@ -27,6 +30,7 @@ object Version {
     const val shimmer = "0.5.0"
     const val swipeRefresh = "1.1.0"
     const val recyclerView = "1.3.0"
+    const val navigationSafeArgs = "2.5.3"
 
     const val testImplJunit = "4.12"
     const val androidTestImplJunit = "1.1.1"
@@ -34,6 +38,8 @@ object Version {
 }
 
 object Deps {
+    const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigationSafeArgs}"
+    const val hiltAgp = "com.google.dagger:hilt-android-gradle-plugin:${Version.dagger}"
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val core = "androidx.core:core-ktx:${Version.core}"
     const val constrainLayout = "androidx.constraintlayout:constraintlayout:${Version.constrainLayout}"
@@ -68,6 +74,16 @@ object DaggerHilt {
     const val hilt = "com.google.dagger:hilt-android:${Version.dagger}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Version.dagger}"
     const val hiltCompiler = "androidx.hilt:hilt-compiler:${Version.hiltCompiler}"
+}
+
+fun DependencyHandler.hilt() {
+    implementation(DaggerHilt.hilt)
+    kapt(DaggerHilt.hiltCompiler)
+    kapt(DaggerHilt.hiltAndroidCompiler)
+}
+
+fun DependencyHandler.homePresentation() {
+    implementation(project(":home:home-presentation"))
 }
 
 object TestImplementation {

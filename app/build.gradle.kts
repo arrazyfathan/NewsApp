@@ -25,7 +25,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
+                "proguard-rules.pro"
             )
         }
     }
@@ -43,7 +43,8 @@ android {
 
 dependencies {
 
-    implementation(project(":home:home-presentation"))
+    // implementation(project(":home:home-presentation"))
+    homePresentation()
     implementation(project(":home:home-data"))
     implementation(project(":home:home-domain"))
     implementation(project(":search:search-presentation"))
@@ -71,9 +72,11 @@ dependencies {
     implementation(Deps.lifecycleRuntime)
 
     // Hilt
-    implementation(DaggerHilt.hilt)
-    kapt(DaggerHilt.hiltCompiler)
-    kapt(DaggerHilt.hiltAndroidCompiler)
+    // implementation(DaggerHilt.hilt)
+    // kapt(DaggerHilt.hiltCompiler)
+    // kapt(DaggerHilt.hiltAndroidCompiler)
+
+    hilt()
 
     // Room
     implementation(Deps.roomKtx)
