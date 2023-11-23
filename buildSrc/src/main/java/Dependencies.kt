@@ -32,17 +32,22 @@ object Version {
     const val recyclerView = "1.3.0"
     const val navigationSafeArgs = "2.5.3"
 
-    const val testImplJunit = "4.12"
+    const val kotlinCoroutinesTest = "1.6.4"
+    const val testImplJunit = "4.13.2"
+    const val robolectrict = "4.9.2"
+    const val testCoreKtx = "1.5.0"
     const val androidTestImplJunit = "1.1.1"
     const val androidTestImplEspresso = "3.2.0"
 }
 
 object Deps {
-    const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigationSafeArgs}"
+    const val navigationSafeArgs =
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Version.navigationSafeArgs}"
     const val hiltAgp = "com.google.dagger:hilt-android-gradle-plugin:${Version.dagger}"
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val core = "androidx.core:core-ktx:${Version.core}"
-    const val constrainLayout = "androidx.constraintlayout:constraintlayout:${Version.constrainLayout}"
+    const val constrainLayout =
+        "androidx.constraintlayout:constraintlayout:${Version.constrainLayout}"
     const val androidLegacySupport = "androidx.legacy:legacy-support-v4:${Version.legacySupport}"
     const val material = "com.google.android.material:material:${Version.material}"
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.viewModelKtx}"
@@ -50,13 +55,17 @@ object Deps {
     const val rookCompiler = "androidx.room:room-compiler:${Version.room}"
     const val roomKtx = "androidx.room:room-ktx:${Version.room}"
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}"
-    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutines}"
-    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleRuntime}"
+    const val coroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutines}"
+    const val lifecycleRuntime =
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Version.lifecycleRuntime}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Version.retrofit}"
     const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Version.retrofit}"
     const val okHttp = "com.squareup.okhttp3:okhttp:${Version.okHttp}"
-    const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Version.loggingInterceptor}"
-    const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
+    const val loggingInterceptor =
+        "com.squareup.okhttp3:logging-interceptor:${Version.loggingInterceptor}"
+    const val navigationFragment =
+        "androidx.navigation:navigation-fragment-ktx:${Version.navigation}"
     const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Version.navigation}"
     const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Version.glide}"
@@ -86,8 +95,19 @@ fun DependencyHandler.homePresentation() {
     implementation(project(":home:home-presentation"))
 }
 
+fun DependencyHandler.testing() {
+    testImplementation(TestImplementation.jUnit)
+    testImplementation(TestImplementation.kotlinCoroutinesTest)
+    testImplementation(TestImplementation.robolectrict)
+    testImplementation(TestImplementation.testCoreKtx)
+}
+
 object TestImplementation {
     const val jUnit = "junit:junit:${Version.testImplJunit}"
+    const val kotlinCoroutinesTest =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.kotlinCoroutinesTest}"
+    const val robolectrict = "org.robolectrict:robolectrict:${Version.robolectrict}"
+    const val testCoreKtx = "androidx.test:core-ktx:${Version.testCoreKtx}"
 }
 
 object AndroidTestImplementation {
