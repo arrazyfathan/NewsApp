@@ -24,7 +24,7 @@ object Version {
     const val dagger = "2.44"
     const val hiltCompiler = "1.0.0"
     const val okHttp = "4.9.0"
-    const val activityKtx = "1.7.0"
+    const val activityKtx = "1.8.1"
     const val fragmentKtx = "1.5.6"
     const val paging = "3.1.1"
     const val shimmer = "0.5.0"
