@@ -23,9 +23,9 @@
         android:id="@+id/tvAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -106,7 +106,6 @@
 
         <include layout="@layout/item_loader" />
     </LinearLayout>
-
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/paginationProgressBar"

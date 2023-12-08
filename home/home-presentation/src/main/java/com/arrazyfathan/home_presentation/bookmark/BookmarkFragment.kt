@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,11 +37,21 @@ class BookmarkFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.tvAppBar) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                topMargin = insets.top
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
+
         return binding.root
     }
 
@@ -61,9 +74,9 @@ class BookmarkFragment : Fragment() {
         rvItemBookmark.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (rvItemBookmark.canScrollVertically(-1)) {
-                    tvAppBar.cardElevation = 20f
+                    // tvAppBar.cardElevation = 20f
                 } else {
-                    tvAppBar.cardElevation = 0f
+                    // tvAppBar.cardElevation = 0f
                 }
                 super.onScrolled(recyclerView, dx, dy)
             }
@@ -75,13 +88,11 @@ class BookmarkFragment : Fragment() {
             if (isChecked) {
                 when (checkedId) {
                     R.id.btn_layout_grid -> if (layoutManager.spanCount == 1) {
-                        layoutManager.spanCount =
-                            2
+                        layoutManager.spanCount = 2
                     }
 
                     R.id.btn_layout_list -> if (layoutManager.spanCount == 2) {
-                        layoutManager.spanCount =
-                            1
+                        layoutManager.spanCount = 1
                     }
                 }
             }
