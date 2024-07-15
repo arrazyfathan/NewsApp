@@ -63,5 +63,5 @@ fun Article.toArticleEntity(): ArticleEntity {
 }
 
 fun Source.toSourceEntity(): SourceEntity {
-    return SourceEntity(name = this.name)
+    return SourceEntity(name = this.name.orEmpty())
 }

@@ -70,7 +70,7 @@ class DetailArticleActivity : AppCompatActivity() {
         article?.let { article ->
             tvSourceArticle.text = article.source.name
             tvPublishedAtArticle.text = dateTimeAgo(article.publishedAt)
-            tvSourceLetterArticle.text = getFirstLetterSource(article.source.name).toString()
+            tvSourceLetterArticle.text = getFirstLetterSource(article.source.name.orEmpty()).toString()
             webView.apply {
                 webViewClient = WebViewClient()
                 loadUrl(article.url)
