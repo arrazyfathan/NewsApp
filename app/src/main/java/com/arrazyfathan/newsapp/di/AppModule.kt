@@ -1,10 +1,10 @@
-package com.example.newsapp.di
+package com.arrazyfathan.newsapp.di
 
 import android.content.Context
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.home_data.source.local.db.BookmarkDao
-import com.example.newsapp.db.AppDatabase
-import com.example.newsapp.navigation.DefaultNavigator
+import com.arrazyfathan.newsapp.db.AppDatabase
+import com.arrazyfathan.newsapp.navigation.DefaultNavigator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

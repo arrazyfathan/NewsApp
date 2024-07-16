@@ -1,4 +1,4 @@
-package com.example.newsapp
+package com.arrazyfathan.newsapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.arrazyfathan.common_utils.getDayOfWeek
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
-import com.example.newsapp.databinding.ActivityMainBinding
+import com.arrazyfathan.newsapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.delay

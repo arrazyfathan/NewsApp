@@ -39,11 +39,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    namespace = "com.example.newsapp"
+    namespace = "com.arrazyfathan.newsapp"
 }
 
 dependencies {
-    
+
     homePresentation()
     implementation(project(":home:home-data"))
     implementation(project(":home:home-domain"))

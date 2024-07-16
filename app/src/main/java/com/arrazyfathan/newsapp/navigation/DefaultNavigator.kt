@@ -1,4 +1,4 @@
-package com.example.newsapp.navigation
+package com.arrazyfathan.newsapp.navigation
 
 import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
