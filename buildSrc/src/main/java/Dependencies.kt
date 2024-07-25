@@ -12,12 +12,12 @@ object Version {
     const val legacySupport = "1.0.0"
     const val material = "1.4.0"
     const val viewModelKtx = "2.3.1"
-    const val room = "2.4.2"
+    const val room = "2.6.1"
     const val coroutines = "1.5.1"
     const val lifecycleRuntime = "2.2.0"
     const val retrofit = "2.6.0"
     const val loggingInterceptor = "4.5.0"
-    const val navigation = "2.2.1"
+    const val navigation = "2.7.7"
     const val glide = "4.11.0"
     const val timeAgo = "4.0.3"
     const val lottie = "4.1.0"
@@ -38,6 +38,8 @@ object Version {
     const val testCoreKtx = "1.5.0"
     const val androidTestImplJunit = "1.1.1"
     const val androidTestImplEspresso = "3.2.0"
+
+    const val plutoVersion = "2.2.2"
 }
 
 object Deps {
@@ -93,6 +95,16 @@ fun DependencyHandler.hilt() {
 
 fun DependencyHandler.homePresentation() {
     implementation(project(":home:home-presentation"))
+}
+
+fun DependencyHandler.pluto() {
+    debugImplementation("com.plutolib:pluto:${Version.plutoVersion}")
+    releaseImplementation("com.plutolib:pluto-no-op:${Version.plutoVersion}")
+    debugImplementation("com.plutolib.plugins:bundle-core:${Version.plutoVersion}")
+    releaseImplementation("com.plutolib.plugins:bundle-core-no-op:${Version.plutoVersion}")
+
+    debugImplementation("com.plutolib.plugins:network-interceptor-okhttp:${Version.plutoVersion}")
+    releaseImplementation("com.plutolib.plugins:network-interceptor-okhttp-no-op:${Version.plutoVersion}")
 }
 
 fun DependencyHandler.testing() {

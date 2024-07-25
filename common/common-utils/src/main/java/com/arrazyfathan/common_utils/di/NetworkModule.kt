@@ -5,6 +5,7 @@ import com.arrazyfathan.common_utils.Constants.BASE_URL
 import com.arrazyfathan.common_utils.network.LoggingInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.pluto.plugins.network.okhttp.PlutoOkhttpInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +39,7 @@ object NetworkModule {
     fun provideOkHttpClient(context: Context): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(getLoggingInterceptor())
+            .addInterceptor(PlutoOkhttpInterceptor)
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(1, TimeUnit.MINUTES)
             .writeTimeout(1, TimeUnit.MINUTES)

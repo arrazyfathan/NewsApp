@@ -71,6 +71,8 @@ dependencies {
     implementation(Deps.roomKtx)
     implementation(Deps.roomRuntime)
     kapt(Deps.rookCompiler)
+
+    pluto()
 }
 
 kapt {
