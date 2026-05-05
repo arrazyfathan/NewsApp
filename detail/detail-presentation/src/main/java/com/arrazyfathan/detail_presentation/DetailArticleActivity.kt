@@ -9,8 +9,8 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnticipateInterpolator
-import android.view.animation.LinearInterpolator
 import android.webkit.WebView
+import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -117,7 +117,10 @@ class DetailArticleActivity : AppCompatActivity() {
     private fun setupProgressBar() {
         binding.webView.webViewClient = object : WebViewClient() {
 
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
                 return false
             }
 

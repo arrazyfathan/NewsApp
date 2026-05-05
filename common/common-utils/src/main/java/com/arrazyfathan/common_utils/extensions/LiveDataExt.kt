@@ -22,10 +22,10 @@ fun <T> LiveData<T>.singleShotObserve(owner: LifecycleOwner, onEventUnhandledCon
     observe(owner, object : Observer<T> {
         private var hasReceivedEvent = false
 
-        override fun onChanged(event: T) {
+        override fun onChanged(value: T) {
             if (!hasReceivedEvent) {
                 hasReceivedEvent = true
-                onEventUnhandledContent(event)
+                onEventUnhandledContent(value)
             }
         }
     })

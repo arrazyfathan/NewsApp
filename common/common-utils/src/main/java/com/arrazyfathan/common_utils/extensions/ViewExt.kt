@@ -2,10 +2,12 @@ package com.arrazyfathan.common_utils.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.view.Gravity
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,7 +20,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 /**
@@ -56,20 +57,25 @@ fun Fragment.focusAndShowKeyboard(view: View) {
 }
 
 fun Fragment.showKeyboard() {
-    val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    val targetView = activity?.currentFocus ?: view ?: return
+    showKeyboard(targetView)
 }
 
 fun Fragment.showKeyboard(editText: View) {
     editText.requestFocus()
-    val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    activity?.showKeyboard(editText)
 }
 
 fun Activity.showKeyboard(editText: View) {
     editText.requestFocus()
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        window.insetsController?.show(WindowInsets.Type.ime())
+        window.insetsController?.systemBarsBehavior =
+            WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    } else {
+        imm.showSoftInput(editText, 0)
+    }
 }
 
 fun showKeyboard(context: Context, editText: View) {
@@ -109,12 +115,18 @@ fun ImageView.loadImage(url: String) {
 }
 
 fun showCustomToast(message: String, activity: Activity) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        return
+    }
+
     val inflater = activity.layoutInflater
     val layout = inflater.inflate(R.layout.custom_toast_layout, null)
 
     val textView = layout.findViewById<TextView>(R.id.toast_text)
     textView.text = message
 
+    @Suppress("DEPRECATION")
     Toast(activity).apply {
         setGravity(Gravity.TOP, 0, 20)
         duration = Toast.LENGTH_SHORT
