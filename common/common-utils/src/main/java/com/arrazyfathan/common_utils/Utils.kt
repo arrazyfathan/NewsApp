@@ -25,7 +25,11 @@ fun dateTimeAgo(date: String): String {
 }
 
 fun getFirstLetterSource(source: String): Char {
-    return source[0].uppercaseChar()
+    return if (source.isNotEmpty()) {
+        source[0].uppercaseChar()
+    } else {
+        '-'
+    }
 }
 
 fun formatHtmlText(htmlString: String): Spanned {

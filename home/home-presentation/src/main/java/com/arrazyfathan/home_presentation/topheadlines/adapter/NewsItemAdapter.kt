@@ -41,7 +41,7 @@ class NewsItemAdapter(
             with(binding) {
                 ivArticleImage.loadImage(article.urlToImage)
                 tvSource.text = article.source.name
-                tvSourceFirstLetter.text =  article.source.let { getFirstLetterSource(it.name).toString() }
+                tvSourceFirstLetter.text =  article.source.let { getFirstLetterSource(it.name.orEmpty()).toString() }
                 tvTitle.text = article.title
                 tvDescription.text = formatHtmlText(article.description)
                 tvPublishedAt.text = dateTimeAgo(article.publishedAt)

@@ -1,6 +1,7 @@
 package com.arrazyfathan.home_presentation.topheadlines
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -91,6 +92,7 @@ class TopHeadlinesFragment : Fragment() {
             )
             lifecycleScope.launch {
                 topHeadlinesAdapter.loadStateFlow.collect { loadState ->
+                    Log.d("asu", loadState.toString())
                     val isListEmpty =
                         loadState.refresh is LoadState.NotLoading && topHeadlinesAdapter.itemCount == 0 // ktlint-disable max-line-length
                     // show empty list

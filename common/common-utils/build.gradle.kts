@@ -77,4 +77,6 @@ dependencies {
     implementation(Deps.glide)
     implementation(Deps.glideCompiler)
     implementation(Deps.swipeRefresh)
+
+    pluto()
 }

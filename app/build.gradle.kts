@@ -36,7 +36,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    namespace = "com.example.newsapp"
+    namespace = "com.arrazyfathan.newsapp"
 }
 
 kotlin {
@@ -47,7 +47,6 @@ kotlin {
 
 dependencies {
 
-    // implementation(project(":home:home-presentation"))
     homePresentation()
     implementation(project(":home:home-data"))
     implementation(project(":home:home-domain"))
@@ -62,30 +61,21 @@ dependencies {
     implementation(Deps.core)
     implementation(Deps.constrainLayout)
     implementation(Deps.androidLegacySupport)
-    /*testImplementation(TestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)*/
     implementation(Deps.material)
 
-    // Coroutines
     implementation(Deps.coroutinesCore)
     implementation(Deps.coroutinesAndroid)
 
-    // Coroutine Lifecycle Scopes
     implementation(Deps.viewModelKtx)
     implementation(Deps.lifecycleRuntime)
 
-    // Hilt
-    // implementation(DaggerHilt.hilt)
-    // kapt(DaggerHilt.hiltCompiler)
-    // kapt(DaggerHilt.hiltAndroidCompiler)
-
     hilt()
 
-    // Room
     implementation(Deps.roomKtx)
     implementation(Deps.roomRuntime)
     kapt(Deps.rookCompiler)
+
+    pluto()
 }
 
 kapt {
