@@ -1,72 +1,36 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    alias(libs.plugins.newsapp.android.library)
+    alias(libs.plugins.newsapp.android.hilt)
 }
 
 android {
     namespace = "com.arrazyfathan.detail_presentation"
-    compileSdk = DefaultConfig.compileSdk
 
-    defaultConfig {
-        minSdk = DefaultConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     buildFeatures {
         viewBinding = true
     }
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
-}
-
 dependencies {
-
-    implementation(Deps.core)
-    implementation(Deps.appCompat)
-    implementation(Deps.material)
-    implementation(Deps.constrainLayout)
-    /*testImplementation(TestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)*/
-
-    // Hilt
-    implementation(DaggerHilt.hilt)
-    kapt(DaggerHilt.hiltCompiler)
-    kapt(DaggerHilt.hiltAndroidCompiler)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.google.material)
+    implementation(libs.androidx.constraintlayout)
+    /*testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)*/
 
     // Coroutines
-    implementation(Deps.coroutinesCore)
-    implementation(Deps.coroutinesAndroid)
+    implementation(libs.bundles.coroutines)
 
     // Coroutine Lifecycle Scopes
-    implementation(Deps.viewModelKtx)
-    implementation(Deps.lifecycleRuntime)
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
-    implementation(Deps.activityKtx)
-    implementation(Deps.fragmentKtx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
 
-    implementation(Deps.lottie)
+    implementation(libs.lottie)
 
     implementation(project(":common:common-utils"))
     implementation(project(":common:common-ui"))

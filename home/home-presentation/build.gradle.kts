@@ -1,91 +1,55 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    alias(libs.plugins.newsapp.android.library)
+    alias(libs.plugins.newsapp.android.hilt)
 }
 
 android {
     namespace = "com.arrazyfathan.home_presentation"
-    compileSdk = DefaultConfig.compileSdk
 
-    defaultConfig {
-        minSdk = DefaultConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     buildFeatures {
         viewBinding = true
     }
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
-}
-
 dependencies {
-
     implementation(project(":common:common-utils"))
     implementation(project(":common:common-ui"))
     implementation(project(":home:home-domain"))
     implementation(project(":home:home-data"))
 
-    implementation(Deps.core)
-    implementation(Deps.appCompat)
-    implementation(Deps.material)
-    implementation(Deps.constrainLayout)
-    /*testImplementation(TestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)*/
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.google.material)
+    implementation(libs.androidx.constraintlayout)
+    /*testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)*/
 
     // Navigation Components
-    implementation(Deps.navigationFragment)
-    implementation(Deps.navigationUi)
-
-    // Hilt
-    implementation(DaggerHilt.hilt)
-    kapt(DaggerHilt.hiltCompiler)
-    kapt(DaggerHilt.hiltAndroidCompiler)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Coroutines
-    implementation(Deps.coroutinesCore)
-    implementation(Deps.coroutinesAndroid)
+    implementation(libs.bundles.coroutines)
 
     // Coroutine Lifecycle Scopes
-    implementation(Deps.viewModelKtx)
-    implementation(Deps.lifecycleRuntime)
+    implementation(libs.bundles.lifecycle)
 
     // Glide
-    implementation(Deps.glide)
-    kapt(Deps.glideCompiler)
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
 
-    implementation(Deps.activityKtx)
-    implementation(Deps.fragmentKtx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
 
     // Lottie
-    implementation(Deps.lottie)
+    implementation(libs.lottie)
 
-    implementation(Deps.paging)
+    implementation(libs.androidx.paging.runtime)
 
-    implementation(Deps.swipeRefresh)
+    implementation(libs.androidx.swiperefreshlayout)
 
-    implementation(Deps.shimmer)
+    implementation(libs.shimmer)
 
-    implementation(Deps.recyclerView)
+    implementation(libs.androidx.recyclerview)
 }

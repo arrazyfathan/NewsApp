@@ -1,21 +1,12 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    alias(libs.plugins.newsapp.android.library)
+    alias(libs.plugins.newsapp.android.hilt)
 }
 
 android {
     namespace = "com.arrazyfathan.common_utils"
-    compileSdk = DefaultConfig.compileSdk
-
-    defaultConfig {
-        minSdk = DefaultConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
 
     val apiKey: String = gradleLocalProperties(rootDir, providers).getProperty("API_KEY")
 
@@ -24,13 +15,6 @@ android {
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
         getByName("debug") {
             isMinifyEnabled = false
             proguardFiles(
@@ -40,43 +24,25 @@ android {
             buildConfigField("String", "API_KEY", "\"$apiKey\"")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
 }
 
 dependencies {
-
     implementation(project(":common:common-ui"))
-    implementation(Deps.core)
-    implementation(Deps.appCompat)
-    implementation(Deps.material)
-    implementation(Deps.timeAgo)
-    /*testImplementation(TestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)*/
-
-    // Hilt
-    implementation(DaggerHilt.hilt)
-    kapt(DaggerHilt.hiltCompiler)
-    kapt(DaggerHilt.hiltAndroidCompiler)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.google.material)
+    implementation(libs.timeago)
+    /*testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)*/
 
     // Retrofil
-    implementation(Deps.retrofit)
-    implementation(Deps.retrofitGsonConverter)
-    implementation(Deps.loggingInterceptor)
-    implementation(Deps.okHttp)
+    implementation(libs.bundles.networking)
 
-    implementation(Deps.glide)
-    implementation(Deps.glideCompiler)
-    implementation(Deps.swipeRefresh)
+    implementation(libs.glide)
+    implementation(libs.glide.compiler)
+    implementation(libs.androidx.swiperefreshlayout)
 
-    pluto()
+    debugImplementation(libs.bundles.pluto.debug)
+    releaseImplementation(libs.bundles.pluto.release)
 }

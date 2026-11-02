@@ -3,18 +3,25 @@ package com.arrazyfathan.detail_presentation
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnticipateInterpolator
 import android.webkit.WebView
 import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
@@ -44,9 +51,25 @@ class DetailArticleActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+        )
         super.onCreate(savedInstanceState)
         binding = ActivityDetailArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.topBarDetail) { view, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                topMargin = insets.top
+                rightMargin = insets.right
+            }
+            WindowInsetsCompat.CONSUMED
+        }
+
         setupView()
         observe()
     }

@@ -25,34 +25,29 @@
     <FrameLayout
         android:id="@+id/container_nav_menu"
         android:layout_width="250dp"
-        android:layout_height="78dp"
+        android:layout_height="68dp"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="20dp"
         android:background="@drawable/radius_100"
-        android:elevation="20dp"
         android:backgroundTint="@color/white"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="20dp"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom|center"
-                android:background="@android:color/transparent"
-                app:elevation="20dp"
-                android:layout_marginHorizontal="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/bottom_navigation_bar_menu" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="16dp"
+            android:background="@android:color/transparent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:elevation="0dp"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_navigation_bar_menu" />
 
     </FrameLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

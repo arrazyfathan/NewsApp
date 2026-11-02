@@ -1,15 +1,11 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        maven(uri("https://jitpack.io"))
-    }
-    dependencies {
-        classpath(Deps.navigationSafeArgs)
-        classpath(Deps.hiltAgp)
-        classpath("com.android.tools.build:gradle:8.13.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.20")
-    }
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.navigation.safeargs) apply false
 }
 
 tasks.register("clean", Delete::class) {

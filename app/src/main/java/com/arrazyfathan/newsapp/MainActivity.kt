@@ -8,9 +8,10 @@ import com.arrazyfathan.common_utils.navigator.Navigator
 import com.arrazyfathan.common_utils.navigator.Screen
 import com.arrazyfathan.newsapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupView()
         lifecycleScope.launch {
-            delay(500L)
+            delay(500L.milliseconds)
             navigation.getScreen(Screen.HomeActivity).navigate(this@MainActivity)
             finish()
         }

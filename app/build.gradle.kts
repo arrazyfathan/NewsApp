@@ -1,23 +1,17 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.newsapp.android.application)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.newsapp.android.hilt)
+    alias(libs.plugins.navigation.safeargs)
 }
 
 android {
-    compileSdk = DefaultConfig.compileSdk
+    namespace = "com.arrazyfathan.newsapp"
 
     defaultConfig {
-        applicationId = DefaultConfig.applicationId
-        minSdk = DefaultConfig.minSdk
-        targetSdk = DefaultConfig.targetSdk
-        versionCode = DefaultConfig.versionCode
-        versionName = DefaultConfig.versionName
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = "com.example.newsapp"
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {
@@ -29,25 +23,14 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     buildFeatures {
         viewBinding = true
-    }
-    namespace = "com.arrazyfathan.newsapp"
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 
 dependencies {
 
-    homePresentation()
+    implementation(project(":home:home-presentation"))
     implementation(project(":home:home-data"))
     implementation(project(":home:home-domain"))
     implementation(project(":search:search-presentation"))
@@ -57,25 +40,21 @@ dependencies {
     implementation(project(":common:common-utils"))
 
     implementation(fileTree("src/main/libs") { include("*.jar") })
-    implementation(Deps.appCompat)
-    implementation(Deps.core)
-    implementation(Deps.constrainLayout)
-    implementation(Deps.androidLegacySupport)
-    implementation(Deps.material)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.google.material)
 
-    implementation(Deps.coroutinesCore)
-    implementation(Deps.coroutinesAndroid)
+    implementation(libs.bundles.coroutines)
 
-    implementation(Deps.viewModelKtx)
-    implementation(Deps.lifecycleRuntime)
+    implementation(libs.bundles.lifecycle)
 
-    hilt()
+    implementation(libs.bundles.room)
+    kapt(libs.androidx.room.compiler)
 
-    implementation(Deps.roomKtx)
-    implementation(Deps.roomRuntime)
-    kapt(Deps.rookCompiler)
-
-    pluto()
+    debugImplementation(libs.bundles.pluto.debug)
+    releaseImplementation(libs.bundles.pluto.release)
 }
 
 kapt {

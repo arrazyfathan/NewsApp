@@ -1,67 +1,28 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    alias(libs.plugins.newsapp.android.library)
+    alias(libs.plugins.newsapp.android.hilt)
 }
 
 android {
     namespace = "com.arrazyfathan.home_data"
-    compileSdk = DefaultConfig.compileSdk
-
-    defaultConfig {
-        minSdk = DefaultConfig.minSdk
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-    }
 }
 
 dependencies {
-
     implementation(project(":common:common-utils"))
     implementation(project(":home:home-domain"))
 
-    implementation(Deps.core)
-    implementation(Deps.appCompat)
-    implementation(Deps.material)
-    /*testImplementation(TestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.jUnit)
-    androidTestImplementation(AndroidTestImplementation.espresso)*/
-
-    // Hilt
-    implementation(DaggerHilt.hilt)
-    kapt(DaggerHilt.hiltCompiler)
-    kapt(DaggerHilt.hiltAndroidCompiler)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.google.material)
+    /*testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)*/
 
     // Retrofil
-    implementation(Deps.retrofit)
-    implementation(Deps.retrofitGsonConverter)
-    implementation(Deps.loggingInterceptor)
-    implementation(Deps.okHttp)
-    implementation(Deps.paging)
+    implementation(libs.bundles.networking)
+    implementation(libs.androidx.paging.runtime)
 
     // Room
-    implementation(Deps.roomKtx)
-    implementation(Deps.roomRuntime)
-    kapt(Deps.rookCompiler)
+    implementation(libs.bundles.room)
+    kapt(libs.androidx.room.compiler)
 }

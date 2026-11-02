@@ -53,6 +53,10 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationBar.setupWithNavController(navController)
         binding.bottomNavigationBar.itemIconTintList = null
         binding.bottomNavigationBar.background = null
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationBar) { view, windowInsets ->
+            view.setPadding(view.paddingLeft, view.paddingTop, view.paddingRight, 0)
+            windowInsets
+        }
 
         binding.bottomNavigationBar.setOnItemSelectedListener { item ->
             val currentDestination = navController.currentDestination
