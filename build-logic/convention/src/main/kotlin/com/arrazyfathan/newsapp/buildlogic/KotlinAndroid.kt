@@ -1,20 +1,17 @@
 package com.arrazyfathan.newsapp.buildlogic
 
-import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 /**
- * Shared Android + Kotlin configuration (previously duplicated in every module
- * and backed by buildSrc/DefaultConfig.kt).
+ * Shared Android configuration for application modules.
  */
 internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    extension: ApplicationExtension,
 ) {
-    commonExtension.apply {
+    extension.apply {
         compileSdk = libs.intVersion("compileSdk")
 
         defaultConfig {
@@ -27,10 +24,25 @@ internal fun Project.configureKotlinAndroid(
             targetCompatibility = JavaVersion.VERSION_17
         }
     }
+}
 
-    extensions.configure<KotlinAndroidProjectExtension> {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+/**
+ * Shared Android configuration for library modules.
+ */
+internal fun Project.configureKotlinAndroid(
+    extension: LibraryExtension,
+) {
+    extension.apply {
+        compileSdk = libs.intVersion("compileSdk")
+
+        defaultConfig {
+            minSdk = libs.intVersion("minSdk")
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
         }
     }
 }

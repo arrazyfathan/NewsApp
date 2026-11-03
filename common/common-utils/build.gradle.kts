@@ -1,14 +1,21 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.android.build.api.variant.BuildConfigField
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.newsapp.android.library)
     alias(libs.plugins.newsapp.android.hilt)
 }
 
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+val apiKey: String = localProperties.getProperty("API_KEY") ?: ""
+
 android {
     namespace = "com.arrazyfathan.common_utils"
-
-    val apiKey: String = gradleLocalProperties(rootDir, providers).getProperty("API_KEY")
 
     buildFeatures {
         buildConfig = true
@@ -21,8 +28,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            buildConfigField("String", "API_KEY", "\"$apiKey\"")
         }
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.buildConfigFields?.put(
+            "API_KEY",
+            BuildConfigField("String", "\"$apiKey\"", "News API key"),
+        )
     }
 }
 
