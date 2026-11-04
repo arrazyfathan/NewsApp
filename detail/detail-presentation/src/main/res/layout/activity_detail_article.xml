@@ -6,17 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".DetailArticleActivity">
 
-    <com.google.android.material.card.MaterialCardView
+    <FrameLayout
         android:id="@+id/top_bar_detail"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="70dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/articleSources"
@@ -66,7 +68,7 @@
                 app:layout_constraintTop_toTopOf="@+id/articleSources"
                 tools:text="Lifehacker.com" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/loadingWebView"

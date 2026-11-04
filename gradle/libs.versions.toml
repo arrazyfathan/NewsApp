@@ -25,7 +25,7 @@ fragmentKtx = "1.9.1"
 paging = "3.5.3"
 swipeRefresh = "1.2.0"
 # NOTE: previously resolved via Version.swipeRefresh (1.1.0) in buildSrc; kept as-is to avoid behaviour changes.
-recyclerView = "1.1.0"
+recyclerView = "1.4.0"
 
 # Kotlin
 coroutines = "1.11.0"

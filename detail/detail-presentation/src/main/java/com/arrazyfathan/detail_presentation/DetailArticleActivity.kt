@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnticipateInterpolator
 import android.webkit.WebView
 import android.webkit.WebResourceRequest
@@ -21,7 +20,7 @@ import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.Slide
 import androidx.transition.TransitionManager
@@ -58,16 +57,16 @@ class DetailArticleActivity : AppCompatActivity() {
         binding = ActivityDetailArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.topBarDetail) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
             )
-            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.left
-                topMargin = insets.top
-                rightMargin = insets.right
-            }
-            WindowInsetsCompat.CONSUMED
+            binding.topBarDetail.updatePadding(
+                left = insets.left,
+                top = insets.top,
+                right = insets.right
+            )
+            windowInsets
         }
 
         setupView()
@@ -100,12 +99,10 @@ class DetailArticleActivity : AppCompatActivity() {
                 settings.userAgentString = "Android"
             }
 
-            webView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > oldScrollY && scrollY > 0) {
-                    topBarDetail.cardElevation = 20f
-                }
-                if (scrollY == 0) {
-                    topBarDetail.cardElevation = 0f
+            webView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                val targetElevation = if (scrollY > 0) 20f else 0f
+                if (topBarDetail.elevation != targetElevation) {
+                    topBarDetail.elevation = targetElevation
                 }
             }
 
