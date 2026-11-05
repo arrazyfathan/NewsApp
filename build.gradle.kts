@@ -8,5 +8,6 @@ plugins {
 }
 
 tasks.register("clean", Delete::class) {
+    description = ""
     delete(rootProject.layout.buildDirectory)
 }

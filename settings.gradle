@@ -16,14 +16,20 @@ dependencyResolutionManagement {
 }
 rootProject.name = "News App"
 include ':app'
-include ':home:home-data'
-include ':home:home-domain'
-include ':home:home-presentation'
-include ':common:common-utils'
-include ':search:search-data'
-include ':search:search-domain'
-include ':search:search-presentation'
-include ':common:common-ui'
-include ':detail:detail-article-data'
-include ':detail:detail-article-domain'
-include ':detail:detail-presentation'
+
+// Core modules
+include ':core:ui'
+include ':core:utils'
+
+// Feature modules
+include ':feature:home:data'
+include ':feature:home:domain'
+include ':feature:home:presentation'
+
+include ':feature:search:data'
+include ':feature:search:domain'
+include ':feature:search:presentation'
+
+include ':feature:detail:data'
+include ':feature:detail:domain'
+include ':feature:detail:presentation'

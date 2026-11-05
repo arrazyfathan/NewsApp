@@ -1,8 +1,8 @@
 package com.arrazyfathan.newsapp.di
 
 import android.content.Context
-import com.arrazyfathan.common_utils.navigator.Navigator
-import com.arrazyfathan.home_data.source.local.db.BookmarkDao
+import com.arrazyfathan.common.utils.navigator.Navigator
+import com.arrazyfathan.home.data.source.local.db.BookmarkDao
 import com.arrazyfathan.newsapp.db.AppDatabase
 import com.arrazyfathan.newsapp.navigation.DefaultNavigator
 import dagger.Module

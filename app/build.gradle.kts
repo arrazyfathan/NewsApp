@@ -30,14 +30,14 @@ android {
 
 dependencies {
 
-    implementation(project(":home:home-presentation"))
-    implementation(project(":home:home-data"))
-    implementation(project(":home:home-domain"))
-    implementation(project(":search:search-presentation"))
-    implementation(project(":search:search-data"))
-    implementation(project(":search:search-domain"))
-    implementation(project(":detail:detail-presentation"))
-    implementation(project(":common:common-utils"))
+    implementation(project(":feature:home:presentation"))
+    implementation(project(":feature:home:data"))
+    implementation(project(":feature:home:domain"))
+    implementation(project(":feature:search:presentation"))
+    implementation(project(":feature:search:data"))
+    implementation(project(":feature:search:domain"))
+    implementation(project(":feature:detail:presentation"))
+    implementation(project(":core:utils"))
 
     implementation(fileTree("src/main/libs") { include("*.jar") })
     implementation(libs.androidx.appcompat)

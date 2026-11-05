@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.arrazyfathan.home_data.source.local.db.BookmarkDao
-import com.arrazyfathan.home_data.source.local.entities.ArticleEntity
+import com.arrazyfathan.home.data.source.local.db.BookmarkDao
+import com.arrazyfathan.home.data.source.local.entities.ArticleEntity
 
 /**
  * Created by Ar Razy Fathan Rabbani on 13/05/23.
