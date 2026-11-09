@@ -24,5 +24,5 @@ dependencies {
 
     // Room
     implementation(libs.bundles.room)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 }

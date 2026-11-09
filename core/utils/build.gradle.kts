@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.bundles.networking)
 
     implementation(libs.glide)
-    implementation(libs.glide.compiler)
     implementation(libs.androidx.swiperefreshlayout)
 
     debugImplementation(libs.bundles.pluto.debug)

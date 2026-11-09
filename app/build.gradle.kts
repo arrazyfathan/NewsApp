@@ -51,12 +51,8 @@ dependencies {
     implementation(libs.bundles.lifecycle)
 
     implementation(libs.bundles.room)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     debugImplementation(libs.bundles.pluto.debug)
     releaseImplementation(libs.bundles.pluto.release)
-}
-
-kapt {
-    correctErrorTypes = true
 }

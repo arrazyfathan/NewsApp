@@ -1,6 +1,7 @@
 # Today News App
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.4.21-purple.svg)](https://kotlinlang.org)
+[![KSP](https://img.shields.io/badge/KSP-2.3.13-orange.svg)](https://github.com/google/ksp)
 [![AGP](https://img.shields.io/badge/AGP-9.5.0-brightgreen.svg)](https://developer.android.com/build)
 [![Gradle](https://img.shields.io/badge/Gradle-9.8.2-blue.svg)](https://gradle.org)
 [![Compile SDK](https://img.shields.io/badge/Compile%20SDK-37-blue.svg)](https://developer.android.com/about/versions/16)
@@ -101,18 +102,19 @@ graph TD
 
 ### Build System & Toolchain
 - **Gradle 9.8.2** with **Android Gradle Plugin (AGP) 9.5.0**
+- **Kotlin Symbol Processing (KSP) 2.3.13**: Modern, high-performance annotation processing replacing KAPT
 - **Gradle Version Catalog** (`gradle/libs.versions.toml`) for centralized versioning
 - **Build-Logic Convention Plugins**:
   - `newsapp.android.application`
   - `newsapp.android.library`
-  - `newsapp.android.hilt`
+  - `newsapp.android.hilt` (integrated with KSP)
 - **Kotlin 2.4.21** (target JVM 17)
 - **Compile SDK / Target SDK**: 37 (Android 16), **Min SDK**: 26 (Android 8.0)
 
 ### Architecture & Dependency Injection
 - **Clean Architecture** (Data, Domain, Presentation)
 - **MVVM Pattern** (Model-View-ViewModel)
-- **Dagger Hilt 2.60.1**: Dependency injection across all feature and core modules
+- **Dagger Hilt 2.60.1**: Dependency injection across all feature and core modules via KSP
 - **Navigation Component (SafeArgs)** & Decoupled `Navigator.Provider`
 
 ### Reactive & Asynchronous
@@ -131,7 +133,7 @@ graph TD
 
 ### Network & Data Storage
 - **Retrofit 3.0.0** & **OkHttp 5.5.1**: REST API client and HTTP logging
-- **Room Database 2.8.5**: SQLite object mapping for offline bookmark caching
+- **Room Database 2.8.5**: SQLite object mapping with KSP compiler for offline bookmark caching
 - **Pluto 2.2.2**: In-app HTTP network inspector and diagnostic bundle (debug builds)
 
 ---

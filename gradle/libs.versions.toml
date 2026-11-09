@@ -7,6 +7,7 @@ targetSdk = "37"
 # Build tooling
 agp = "9.5.0"
 kotlin = "2.4.21"
+ksp = "2.3.13"
 navigationSafeArgs = "2.10.2"
 
 # AndroidX
@@ -93,7 +94,6 @@ okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-intercepto
 
 # UI / misc
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 timeago = { module = "com.github.marlonlom:timeago", version.ref = "timeAgo" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
@@ -118,6 +118,7 @@ androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core",
 # Build logic (compileOnly in build-logic/convention)
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 
 [bundles]
 coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
@@ -132,7 +133,7 @@ unit-test = ["junit", "kotlinx-coroutines-test", "robolectric", "androidx-test-c
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationSafeArgs" }
